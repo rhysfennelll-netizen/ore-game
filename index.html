@@ -3,5331 +3,1040 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-<meta name="theme-color" content="#0b0d12" />
+<meta name="theme-color" content="#090b10" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="OREBOUND" />
 <title>OREBOUND</title>
-
 <style>
 :root{
-  --bg:#090b10;
-  --panel:#121620;
-  --panel2:#191f2c;
-  --text:#f6f7fb;
-  --muted:#8d96a8;
-  --line:rgba(255,255,255,.08);
-  --accent:#80e8c2;
-  --gold:#ffd166;
-  --danger:#ff6b7a;
-  --shadow:0 18px 55px rgba(0,0,0,.35)
-}
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent
-}
-
-html,body{
-  margin:0;
-  min-height:100%;
-  background:var(--bg);
-  color:var(--text);
-  font-family:ui-rounded,-apple-system,BlinkMacSystemFont,
-  "SF Pro Rounded","SF Pro Display",Inter,system-ui,sans-serif
-}
-
-body{
-  min-height:100dvh;
-  overflow-x:hidden;
-  background:
-    radial-gradient(circle at 50% -15%,rgba(128,232,194,.12),transparent 34%),
-    var(--bg)
-}
-
-button,input{font:inherit}
-
-.app{
-  width:min(100%,720px);
-  margin:auto;
-  min-height:100dvh;
-  padding:
-    calc(env(safe-area-inset-top) + 12px)
-    14px
-    calc(92px + env(safe-area-inset-bottom))
-}
-
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  position:sticky;
-  top:0;
-  z-index:20;
-  padding:8px 0 10px;
-  background:linear-gradient(var(--bg) 70%,transparent)
-}
-
-.brand{
-  font-weight:950;
-  letter-spacing:.08em;
-  font-size:18px
-}
-
-.brand span{color:var(--accent)}
-
-.wallet{
-  display:flex;
-  gap:7px;
-  align-items:center
-}
-
-.pill{
-  background:rgba(255,255,255,.06);
-  border:1px solid var(--line);
-  border-radius:999px;
-  padding:8px 10px;
-  font-weight:850;
-  font-size:13px;
-  white-space:nowrap
-}
-
-.iconbtn{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.06);
-  color:var(--text);
-  font-size:18px
-}
-
-.view{display:none}
-.view.active{display:block}
-
-.card{
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.055),
-      rgba(255,255,255,.025)
-    );
-  border:1px solid var(--line);
-  border-radius:22px;
-  box-shadow:var(--shadow)
-}
-
-.mineHero{
-  position:relative;
-  overflow:hidden;
-  padding:18px;
-  min-height:515px;
-  background:linear-gradient(180deg,var(--depthA),var(--depthB));
-  transition:.35s
-}
-
-.mineHero:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(
-      circle at 50% 36%,
-      rgba(255,255,255,.12),
-      transparent 35%
-    ),
-    linear-gradient(
-      180deg,
-      transparent 50%,
-      rgba(0,0,0,.28)
-    );
-  pointer-events:none
-}
-
-.heroHead{
-  position:relative;
-  z-index:2;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:8px
-}
-
-.eyebrow{
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  color:rgba(255,255,255,.65);
-  font-weight:900
-}
-
-.depthTitle{
-  font-size:25px;
-  font-weight:950;
-  margin-top:3px
-}
-
-.depthStats{
-  text-align:right;
-  font-size:12px;
-  color:rgba(255,255,255,.72);
-  line-height:1.45
-}
-
-.rockWrap{
-  position:relative;
-  z-index:2;
-  display:grid;
-  place-items:center;
-  margin:23px 0 12px
-}
-
-.rockBtn{
-  width:224px;
-  height:224px;
-  border:0;
-  border-radius:
-    48% 52% 44% 56% /
-    58% 43% 57% 42%;
-  background:
-    radial-gradient(
-      circle at 35% 28%,
-      #666b75 0 10%,
-      #444a55 28%,
-      #2a2f39 62%,
-      #1c2028 100%
-    );
-  box-shadow:
-    inset -22px -26px 42px rgba(0,0,0,.35),
-    inset 15px 12px 20px rgba(255,255,255,.09),
-    0 25px 45px rgba(0,0,0,.38);
-  color:white;
-  font-size:76px;
-  position:relative;
-  cursor:pointer;
-  touch-action:manipulation;
-  transition:transform .08s
-}
-
-.rockBtn:active,
-.rockBtn.hit{
-  transform:scale(.965) rotate(-1deg)
-}
-
-.rockBtn:after{
-  content:"";
-  position:absolute;
-  inset:17%;
-  border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      transparent 45%,
-      rgba(255,255,255,.06) 46% 48%,
-      transparent 49%
-    )
-}
-
-.hp{
-  width:min(330px,86%);
-  height:10px;
-  border-radius:999px;
-  background:rgba(0,0,0,.38);
-  overflow:hidden;
-  margin:0 auto 8px;
-  position:relative;
-  z-index:2;
-  border:1px solid rgba(255,255,255,.08)
-}
-
-.hp>i{
-  display:block;
-  height:100%;
-  width:100%;
-  background:linear-gradient(90deg,var(--accent),#d9fff0);
-  border-radius:inherit;
-  transition:width .12s
-}
-
-.hint{
-  text-align:center;
-  font-size:13px;
-  color:rgba(255,255,255,.7);
-  position:relative;
-  z-index:2
-}
-
-.dropLine{
-  height:44px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  font-size:15px;
-  position:relative;
-  z-index:2;
-  text-align:center
-}
-
-.dropLine.pop{
-  animation:pop .35s ease
-}
-
-@keyframes pop{
-  0%{transform:scale(.85);opacity:.3}
-  70%{transform:scale(1.08)}
-  100%{transform:scale(1);opacity:1}
-}
-
-.depthStrip{
-  display:flex;
-  gap:9px;
-  overflow-x:auto;
-  padding:12px 1px 3px;
-  scrollbar-width:none
-}
-
-.depthStrip::-webkit-scrollbar{display:none}
-
-.depthChip{
-  min-width:138px;
-  padding:12px;
-  border-radius:16px;
-  background:rgba(0,0,0,.25);
-  border:1px solid rgba(255,255,255,.11);
-  color:white;
-  text-align:left
-}
-
-.depthChip.active{
-  outline:2px solid rgba(128,232,194,.75)
-}
-
-.depthChip.locked{opacity:.72}
-
-.depthChip b{
-  display:block;
-  font-size:13px
-}
-
-.depthChip small{
-  display:block;
-  margin-top:4px;
-  color:rgba(255,255,255,.62);
-  font-size:11px;
-  line-height:1.3
-}
-
-.unlockBtn{
-  width:100%;
-  margin-top:8px;
-  border:0;
-  border-radius:11px;
-  padding:8px;
-  background:rgba(255,255,255,.1);
-  color:#fff;
-  font-weight:900;
-  font-size:11px
-}
-
-.unlockBtn.can{
-  background:var(--accent);
-  color:#07110e
-}
-
-.sectionHead{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:8px;
-  margin:19px 2px 10px
-}
-
-.sectionHead h2{
-  margin:0;
-  font-size:21px
-}
-
-.sectionHead p{
-  margin:0;
-  color:var(--muted);
-  font-size:12px
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px
-}
-
-.oreCard,
-.geoCard,
-.forgeCard,
-.enchCard,
-.setCard,
-.shopCard{
-  padding:14px
-}
-
-.oreCard{
-  min-height:125px;
-  position:relative;
-  overflow:hidden
-}
-
-.oreCard.unknown{
-  filter:saturate(.4);
-  opacity:.6
-}
-
-.oreIcon{font-size:31px}
-
-.oreName{
-  font-weight:950;
-  margin-top:7px
-}
-
-.oreMeta{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:4px
-}
-
-.countBadge{
-  position:absolute;
-  right:11px;
-  top:11px;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-  padding:5px 8px;
-  font-size:11px;
-  font-weight:900
-}
-
-.masterBar{
-  height:6px;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-  overflow:hidden;
-  margin-top:9px
-}
-
-.masterBar i{
-  display:block;
-  height:100%;
-  background:var(--accent);
-  border-radius:inherit
-}
-
-.variantDots{
-  display:flex;
-  gap:4px;
-  margin-top:8px
-}
-
-.variantDots i{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:rgba(255,255,255,.13)
-}
-
-.variantDots i.on{
-  background:var(--gold);
-  box-shadow:0 0 8px rgba(255,209,102,.6)
-}
-
-.filters{
-  display:flex;
-  gap:7px;
-  overflow-x:auto;
-  padding-bottom:8px;
-  scrollbar-width:none
-}
-
-.filters::-webkit-scrollbar{display:none}
-
-.filter{
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.045);
-  color:var(--muted);
-  border-radius:999px;
-  padding:8px 11px;
-  font-size:12px;
-  font-weight:850;
-  white-space:nowrap
-}
-
-.filter.active{
-  background:var(--text);
-  color:#11151d
-}
-
-.bigStat{
-  font-size:31px;
-  font-weight:950
-}
-
-.sub{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.45
-}
-
-.row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px
-}
-
-.btn{
-  border:0;
-  border-radius:14px;
-  padding:11px 13px;
-  background:var(--accent);
-  color:#07110e;
-  font-weight:950
-}
-
-.btn.secondary{
-  background:rgba(255,255,255,.08);
-  color:var(--text);
-  border:1px solid var(--line)
-}
-
-.btn.gold{
-  background:var(--gold);
-  color:#201600
-}
-
-.btn.danger{
-  background:rgba(255,107,122,.13);
-  color:#ff9ca7;
-  border:1px solid rgba(255,107,122,.2)
-}
-
-.btn:disabled{
-  opacity:.38;
-  filter:grayscale(.5)
-}
-
-.geoCard .geoEmoji{font-size:38px}
-
-.geoCard h3,
-.forgeCard h3,
-.enchCard h3,
-.setCard h3,
-.shopCard h3{
-  margin:7px 0 4px
-}
-
-.geoCard .btn{
-  width:100%;
-  margin-top:12px
-}
-
-.stack{
-  display:grid;
-  gap:10px
-}
-
-.cost{
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.5
-}
-
-.cost .ok{color:#9ef3d4}
-.cost .bad{color:#ff9ca7}
-
-.pickaxeVisual{
-  height:140px;
-  display:grid;
-  place-items:center;
-  font-size:84px;
-  border-radius:18px;
-  background:
-    radial-gradient(
-      circle,
-      rgba(128,232,194,.1),
-      transparent 58%
-    ),
-    rgba(255,255,255,.025);
-  margin:10px 0
-}
-
-.skin-steel{filter:none}
-
-.skin-gold{
-  filter:
-    sepia(1)
-    saturate(2.4)
-    hue-rotate(355deg)
-}
-
-.skin-obsidian{
-  filter:grayscale(1) contrast(1.45)
-}
-
-.skin-neon{
-  filter:
-    drop-shadow(0 0 12px #7ef8ff)
-    saturate(1.5)
-}
-
-.enchIcon{font-size:26px}
-.enchName{font-weight:950}
-
-.enchEffect{
-  font-size:12px;
-  color:var(--muted);
-  margin:3px 0 9px
-}
-
-.lockedPanel{
-  padding:22px;
-  text-align:center;
-  color:var(--muted)
-}
-
-.bottomNav{
-  position:fixed;
-  left:50%;
-  transform:translateX(-50%);
-  bottom:0;
-  width:min(100%,720px);
-  z-index:40;
-  padding:
-    8px 10px
-    calc(8px + env(safe-area-inset-bottom));
-  background:
-    linear-gradient(
-      180deg,
-      rgba(9,11,16,.3),
-      rgba(9,11,16,.96) 26%
-    );
-  backdrop-filter:blur(14px);
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px
-}
-
-.navBtn{
-  border:0;
-  background:transparent;
-  color:#70798a;
-  border-radius:15px;
-  padding:7px 2px 5px;
-  font-weight:850;
-  font-size:10px
-}
-
-.navBtn span{
-  display:block;
-  font-size:21px;
-  margin-bottom:2px
-}
-
-.navBtn.active{
-  color:var(--text);
-  background:rgba(255,255,255,.065)
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.62);
-  backdrop-filter:blur(8px);
-  display:none;
-  align-items:flex-end;
-  justify-content:center
-}
-
-.modal.show{display:flex}
-
-.sheet{
-  width:min(100%,720px);
-  max-height:86dvh;
-  overflow:auto;
-  background:#111620;
-  border-radius:26px 26px 0 0;
-  border:1px solid var(--line);
-  padding:
-    18px 16px
-    calc(22px + env(safe-area-inset-bottom));
-  box-shadow:0 -30px 80px rgba(0,0,0,.55)
-}
-
-.sheetHandle{
-  width:45px;
-  height:5px;
-  border-radius:99px;
-  background:rgba(255,255,255,.17);
-  margin:0 auto 14px
-}
-
-.sheet h2{margin:0 0 4px}
-
-.close{
-  float:right;
-  width:36px;
-  height:36px;
-  border:0;
-  border-radius:12px;
-  background:rgba(255,255,255,.07);
-  color:white
-}
-
-.discovery{
-  text-align:center;
-  padding:18px 4px 8px
-}
-
-.discovery .giant{font-size:88px}
-
-.discovery h1{
-  font-size:32px;
-  margin:5px 0
-}
-
-.discovery .rare{
-  color:var(--gold);
-  font-weight:950;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  font-size:11px
-}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:calc(86px + env(safe-area-inset-bottom));
-  transform:translate(-50%,16px);
-  z-index:120;
-  background:#f6f7fb;
-  color:#11151d;
-  border-radius:999px;
-  padding:10px 14px;
-  font-size:12px;
-  font-weight:900;
-  opacity:0;
-  pointer-events:none;
-  transition:.22s;
-  max-width:88%;
-  text-align:center
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0)
-}
-
-.saveNote{
-  font-size:10px;
-  color:#647083;
-  margin-top:2px
-}
-
-.miniGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:12px
-}
-
-.mini{
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:10px;
-  text-align:center
-}
-
-.mini b{
-  display:block;
-  font-size:14px
-}
-
-.mini span{
-  font-size:10px;
-  color:var(--muted)
-}
-
-@media(min-width:560px){
-  .grid{
-    grid-template-columns:repeat(3,minmax(0,1fr))
-  }
-
-  .mineHero{min-height:545px}
-
-  .rockBtn{
-    width:245px;
-    height:245px
-  }
-}
+  --bg:#090b10;--panel:#121620;--panel2:#191f2c;--text:#f6f7fb;--muted:#8d96a8;
+  --line:rgba(255,255,255,.085);--accent:#80e8c2;--gold:#ffd166;--danger:#ff6b7a;
+  --blue:#8bc7ff;--shadow:0 18px 55px rgba(0,0,0,.35)
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:ui-rounded,-apple-system,BlinkMacSystemFont,"SF Pro Rounded","SF Pro Display",Inter,system-ui,sans-serif}
+body{min-height:100dvh;overflow-x:hidden;background:radial-gradient(circle at 50% -15%,rgba(128,232,194,.11),transparent 34%),var(--bg)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{width:min(100%,720px);margin:auto;min-height:100dvh;padding:calc(env(safe-area-inset-top) + 10px) 14px calc(92px + env(safe-area-inset-bottom))}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:20;padding:7px 0 10px;background:linear-gradient(var(--bg) 72%,transparent)}
+.brandBtn{border:0;background:transparent;color:var(--text);padding:0;text-align:left}
+.brand{font-weight:950;letter-spacing:.08em;font-size:18px}.brand span{color:var(--accent)}
+.saveNote{font-size:10px;color:#647083;margin-top:2px}.topRight{display:flex;align-items:center;gap:7px}.wallet{display:flex;gap:7px;align-items:center}
+.pill{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:8px 10px;font-weight:850;font-size:13px;white-space:nowrap}
+.devBadge{display:none;background:rgba(255,107,122,.13);color:#ff9ca7;border:1px solid rgba(255,107,122,.22);border-radius:999px;padding:6px 8px;font-size:10px;font-weight:950;letter-spacing:.08em}.devBadge.show{display:block}
+.iconbtn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font-size:18px}
+.view{display:none}.view.active{display:block}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.mineHero{position:relative;overflow:hidden;padding:18px;min-height:520px;background:linear-gradient(180deg,var(--depthA),var(--depthB));transition:.35s}
+.mineHero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 36%,rgba(255,255,255,.12),transparent 35%),linear-gradient(180deg,transparent 50%,rgba(0,0,0,.3));pointer-events:none}
+.heroHead{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.62);font-weight:900}.depthTitle{font-size:25px;font-weight:950;margin-top:3px}.depthStats{text-align:right;font-size:12px;color:rgba(255,255,255,.72);line-height:1.45}
+.rockWrap{position:relative;z-index:2;display:grid;place-items:center;margin:20px 0 12px}.rockBtn{width:224px;height:224px;border:0;border-radius:48% 52% 44% 56% / 58% 43% 57% 42%;background:radial-gradient(circle at 35% 28%,#666b75 0 10%,#444a55 28%,#2a2f39 62%,#1c2028 100%);box-shadow:inset -22px -26px 42px rgba(0,0,0,.35),inset 15px 12px 20px rgba(255,255,255,.09),0 25px 45px rgba(0,0,0,.38);color:white;font-size:76px;position:relative;touch-action:manipulation;transition:transform .08s}.rockBtn:active,.rockBtn.hit{transform:scale(.965) rotate(-1deg)}
+.hp{width:min(330px,86%);height:10px;border-radius:999px;background:rgba(0,0,0,.38);overflow:hidden;margin:0 auto 8px;position:relative;z-index:2;border:1px solid rgba(255,255,255,.08)}.hp>i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--accent),#d9fff0);border-radius:inherit;transition:width .12s}.hint{text-align:center;font-size:13px;color:rgba(255,255,255,.7);position:relative;z-index:2}.dropLine{min-height:44px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;position:relative;z-index:2;text-align:center}.dropLine.pop{animation:pop .35s ease}@keyframes pop{0%{transform:scale(.85);opacity:.3}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.boostStrip{position:relative;z-index:2;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:3px -2px 2px;padding:2px}.boostStrip::-webkit-scrollbar{display:none}.boostChip{white-space:nowrap;background:rgba(0,0,0,.26);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:6px 9px;font-size:10px;font-weight:850;color:rgba(255,255,255,.82)}
+.depthStrip{display:flex;gap:9px;overflow-x:auto;padding:12px 1px 3px;scrollbar-width:none;position:relative;z-index:2}.depthStrip::-webkit-scrollbar{display:none}.depthChip{min-width:145px;padding:12px;border-radius:16px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.11);color:white;text-align:left}.depthChip.active{outline:2px solid rgba(128,232,194,.75)}.depthChip.locked{opacity:.72}.depthChip b{display:block;font-size:13px}.depthChip small{display:block;margin-top:4px;color:rgba(255,255,255,.62);font-size:11px;line-height:1.35}.unlockBtn{width:100%;margin-top:8px;border:0;border-radius:11px;padding:8px;background:rgba(255,255,255,.1);color:#fff;font-weight:900;font-size:11px}.unlockBtn.can{background:var(--accent);color:#07110e}
+.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:8px;margin:19px 2px 10px}.sectionHead h2{margin:0;font-size:21px}.sectionHead p{margin:0;color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stack{display:grid;gap:10px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.wrapRow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.oreCard,.geoCard,.forgeCard,.enchCard,.setCard,.shopCard,.systemCard,.workCard,.refineCard,.expCard,.marketCard,.coreCard{padding:14px}.oreCard{min-height:125px;position:relative;overflow:hidden}.oreCard.unknown{filter:saturate(.4);opacity:.6}.oreIcon{font-size:31px}.oreName{font-weight:950;margin-top:7px}.oreMeta{font-size:11px;color:var(--muted);margin-top:4px}.countBadge{position:absolute;right:11px;top:11px;border-radius:999px;background:rgba(255,255,255,.08);padding:5px 8px;font-size:11px;font-weight:900}.masterBar{height:6px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:9px}.masterBar i{display:block;height:100%;background:var(--accent);border-radius:inherit}.variantDots{display:flex;gap:4px;margin-top:8px}.variantDots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.13)}.variantDots i.on{background:var(--gold);box-shadow:0 0 8px rgba(255,209,102,.6)}
+.filters,.systemTabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}.filters::-webkit-scrollbar,.systemTabs::-webkit-scrollbar{display:none}.filter,.systemTab{border:1px solid var(--line);background:rgba(255,255,255,.045);color:var(--muted);border-radius:999px;padding:8px 11px;font-size:12px;font-weight:850;white-space:nowrap}.filter.active,.systemTab.active{background:var(--text);color:#11151d}.systemTab.locked{opacity:.48}
+.btn{border:0;border-radius:14px;padding:11px 13px;background:var(--accent);color:#07110e;font-weight:950}.btn.secondary{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--line)}.btn.gold{background:var(--gold);color:#201600}.btn.blue{background:var(--blue);color:#07111c}.btn.danger{background:rgba(255,107,122,.13);color:#ff9ca7;border:1px solid rgba(255,107,122,.2)}.btn:disabled{opacity:.38;filter:grayscale(.5)}.btn.small{padding:8px 10px;border-radius:11px;font-size:11px}.btn.full{width:100%}
+.bigStat{font-size:31px;font-weight:950}.sub{color:var(--muted);font-size:12px;line-height:1.48}.cost{font-size:12px;color:var(--muted);line-height:1.5}.cost .ok{color:#9ef3d4}.cost .bad{color:#ff9ca7}.geoCard .geoEmoji{font-size:38px}.geoCard h3,.forgeCard h3,.enchCard h3,.setCard h3,.shopCard h3,.systemCard h3,.workCard h3,.refineCard h3,.expCard h3,.marketCard h3,.coreCard h3{margin:7px 0 4px}.geoCard .btn{width:100%;margin-top:12px}.pickaxeVisual{height:140px;display:grid;place-items:center;font-size:84px;border-radius:18px;background:radial-gradient(circle,rgba(128,232,194,.1),transparent 58%),rgba(255,255,255,.025);margin:10px 0}.skin-steel{filter:none}.skin-gold{filter:sepia(1) saturate(2.4) hue-rotate(355deg)}.skin-obsidian{filter:grayscale(1) contrast(1.45)}.skin-neon{filter:drop-shadow(0 0 12px #7ef8ff) saturate(1.5)}
+.miniGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.mini{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}.mini b{display:block;font-size:14px}.mini span{font-size:10px;color:var(--muted)}
+.progress{height:8px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden}.progress i{display:block;height:100%;background:var(--accent);border-radius:inherit}.tag{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-size:10px;font-weight:850;color:var(--muted)}.tag.good{color:#9ef3d4}.tag.gold{color:var(--gold)}
+select,input[type="number"]{width:100%;border:1px solid var(--line);background:#0e121a;color:var(--text);border-radius:13px;padding:11px 12px;outline:none}.controlLabel{font-size:11px;color:var(--muted);font-weight:850;margin:0 0 6px}.twoCol{display:grid;grid-template-columns:1fr 1fr;gap:8px}.threeCol{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.systemHero{padding:16px;margin-bottom:10px}.systemRoadmap{display:grid;gap:8px}.roadItem{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--line)}.roadItem.locked{opacity:.55}.roadItem b{font-size:13px}.roadItem span{font-size:11px;color:var(--muted)}
+.prospectTable{display:grid;gap:7px;margin-top:12px}.prospectRow{display:grid;grid-template-columns:1fr auto auto;gap:9px;align-items:center;padding:10px;border-radius:13px;background:rgba(255,255,255,.035);border:1px solid var(--line)}.prospectRow.best{border-color:rgba(128,232,194,.45);background:rgba(128,232,194,.06)}.prospectRow b{font-size:12px}.prospectRow span{font-size:11px;color:var(--muted)}
+.enchSlot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line)}.enchIcon{font-size:26px}.enchName{font-weight:950}.enchEffect{font-size:12px;color:var(--muted);margin:3px 0 9px}
+.lockedPanel{padding:22px;text-align:center;color:var(--muted)}
+.bottomNav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,720px);z-index:40;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(9,11,16,.3),rgba(9,11,16,.96) 26%);backdrop-filter:blur(14px);display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.navBtn{border:0;background:transparent;color:#70798a;border-radius:15px;padding:7px 2px 5px;font-weight:850;font-size:10px}.navBtn span{display:block;font-size:21px;margin-bottom:2px}.navBtn.active{color:var(--text);background:rgba(255,255,255,.065)}
+.modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.62);backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center}.modal.show{display:flex}.sheet{width:min(100%,720px);max-height:88dvh;overflow:auto;background:#111620;border-radius:26px 26px 0 0;border:1px solid var(--line);padding:18px 16px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -30px 80px rgba(0,0,0,.55)}.sheetHandle{width:45px;height:5px;border-radius:99px;background:rgba(255,255,255,.17);margin:0 auto 14px}.sheet h2{margin:0 0 4px}.close{float:right;width:36px;height:36px;border:0;border-radius:12px;background:rgba(255,255,255,.07);color:white}.discovery{text-align:center;padding:18px 4px 8px}.discovery .giant{font-size:88px}.discovery h1{font-size:32px;margin:5px 0}.discovery .rare{color:var(--gold);font-weight:950;letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translate(-50%,16px);z-index:120;background:#f6f7fb;color:#11151d;border-radius:999px;padding:10px 14px;font-size:12px;font-weight:900;opacity:0;pointer-events:none;transition:.22s;max-width:88%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.mineHero{min-height:545px}.rockBtn{width:245px;height:245px}.systemRoadmap{grid-template-columns:1fr 1fr}}
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
   <div class="topbar">
-    <div>
+    <button class="brandBtn" id="brandBtn" aria-label="OREBOUND">
       <div class="brand">ORE<span>BOUND</span></div>
       <div id="saveNote" class="saveNote">Saved locally</div>
-    </div>
-
-    <div class="wallet">
-      <div class="pill">
-        🪙 <span id="coinTop">0</span>
-      </div>
-
-      <button
-        class="iconbtn"
-        id="settingsBtn"
-        aria-label="Settings"
-      >
-        ⚙️
-      </button>
+    </button>
+    <div class="topRight">
+      <div id="devBadge" class="devBadge">DEV</div>
+      <div class="wallet"><div class="pill">🪙 <span id="coinTop">0</span></div></div>
+      <button class="iconbtn" id="settingsBtn" aria-label="Settings">⚙️</button>
     </div>
   </div>
 
   <main>
-
     <section class="view active" id="mineView">
-
       <div class="mineHero card" id="mineHero">
-
         <div class="heroHead">
-
-          <div>
-            <div class="eyebrow">Current depth</div>
-            <div class="depthTitle" id="depthTitle">
-              Surface Quarry
-            </div>
-          </div>
-
+          <div><div class="eyebrow">Current depth</div><div class="depthTitle" id="depthTitle">Surface Quarry</div></div>
           <div class="depthStats" id="depthStats"></div>
-
         </div>
-
-        <div class="rockWrap">
-          <button
-            id="rockBtn"
-            class="rockBtn"
-            aria-label="Mine rock"
-          >
-            ⛏️
-          </button>
-        </div>
-
-        <div class="hp">
-          <i id="rockHpBar"></i>
-        </div>
-
-        <div class="hint" id="hitHint">
-          Tap to mine
-        </div>
-
-        <div id="dropLine" class="dropLine">
-          Break the rock to reveal ore
-        </div>
-
-        <div
-          class="depthStrip"
-          id="depthStrip"
-        ></div>
-
+        <div class="rockWrap"><button id="rockBtn" class="rockBtn" aria-label="Mine rock">⛏️</button></div>
+        <div class="hp"><i id="rockHpBar"></i></div>
+        <div class="hint" id="hitHint">Tap to mine</div>
+        <div id="dropLine" class="dropLine">Break the rock to reveal ore</div>
+        <div id="boostStrip" class="boostStrip"></div>
+        <div class="depthStrip" id="depthStrip"></div>
       </div>
 
-      <div class="sectionHead">
-        <div>
-          <h2>Mine Stats</h2>
-          <p>Your current run</p>
-        </div>
-      </div>
-
+      <div class="sectionHead"><div><h2>Mine Stats</h2><p>Current setup</p></div></div>
       <div class="miniGrid">
-
-        <div class="mini">
-          <b id="statPower">1</b>
-          <span>Pick Power</span>
-        </div>
-
-        <div class="mini">
-          <b id="statFound">0/50</b>
-          <span>Discovered</span>
-        </div>
-
-        <div class="mini">
-          <b id="statGeode">0%</b>
-          <span>Geode Chance</span>
-        </div>
-
+        <div class="mini"><b id="statPower">1</b><span>Pick Power</span></div>
+        <div class="mini"><b id="statFound">0/50</b><span>Discovered</span></div>
+        <div class="mini"><b id="statGeode">0%</b><span>Geode Chance</span></div>
       </div>
-
     </section>
-
 
     <section class="view" id="collectionView">
-
-      <div class="sectionHead">
-        <div>
-          <h2>Collection</h2>
-          <p id="collectionProgress">
-            0 of 50 discovered
-          </p>
-        </div>
-      </div>
-
-      <div
-        class="filters"
-        id="collectionFilters"
-      ></div>
-
-      <div
-        class="grid"
-        id="oreGrid"
-      ></div>
-
-      <div class="sectionHead">
-        <div>
-          <h2>Ore Sets</h2>
-          <p>Complete sets for rewards</p>
-        </div>
-      </div>
-
-      <div
-        class="stack"
-        id="setList"
-      ></div>
-
+      <div class="sectionHead"><div><h2>Collection</h2><p id="collectionProgress">0 of 50 discovered</p></div></div>
+      <div class="filters" id="collectionFilters"></div>
+      <div class="grid" id="oreGrid"></div>
+      <div class="sectionHead"><div><h2>Ore Sets</h2><p>Complete sets for one-time rewards</p></div></div>
+      <div class="stack" id="setList"></div>
     </section>
-
 
     <section class="view" id="geodesView">
-
-      <div class="sectionHead">
-        <div>
-          <h2>Geodes</h2>
-          <p>Crack them for multiple ores</p>
-        </div>
-      </div>
-
-      <div
-        class="grid"
-        id="geodeGrid"
-      ></div>
-
+      <div class="sectionHead"><div><h2>Geodes</h2><p>Big bundles of materials</p></div></div>
+      <div class="grid" id="geodeGrid"></div>
     </section>
-
 
     <section class="view" id="forgeView">
-
-      <div class="sectionHead">
-        <div>
-          <h2>Forge</h2>
-          <p>Turn your collection into progress</p>
-        </div>
-      </div>
-
-      <div
-        id="pickaxeCard"
-        class="forgeCard card"
-      ></div>
-
-      <div class="sectionHead">
-        <div>
-          <h2>Coin Shop</h2>
-          <p>Utility and cosmetics</p>
-        </div>
-      </div>
-
-      <div
-        class="stack"
-        id="shopList"
-      ></div>
-
+      <div class="sectionHead"><div><h2>Forge</h2><p>Pickaxes, boosts, and cosmetics</p></div></div>
+      <div id="pickaxeCard" class="forgeCard card"></div>
+      <div class="sectionHead"><div><h2>Coin Shop</h2><p>Longer boosts and useful purchases</p></div></div>
+      <div class="stack" id="shopList"></div>
     </section>
 
-
-    <section class="view" id="enchantsView">
-
-      <div class="sectionHead">
-        <div>
-          <h2>Enchantments</h2>
-          <p>Reroll your pickaxe perks</p>
-        </div>
+    <section class="view" id="systemsView">
+      <div class="systemHero card">
+        <div class="eyebrow">Progression systems</div>
+        <h2 style="margin:5px 0 4px">Mine deeper. Unlock more.</h2>
+        <div class="sub">Each major depth adds a new layer without changing the core mining loop.</div>
       </div>
-
-      <div
-        class="stack"
-        id="enchList"
-      ></div>
-
+      <div class="systemTabs" id="systemTabs"></div>
+      <div id="systemPanel"></div>
     </section>
-
   </main>
 </div>
 
-
 <nav class="bottomNav">
-
-  <button
-    class="navBtn active"
-    data-view="mine"
-  >
-    <span>⛏️</span>
-    Mine
-  </button>
-
-  <button
-    class="navBtn"
-    data-view="collection"
-  >
-    <span>💎</span>
-    Collection
-  </button>
-
-  <button
-    class="navBtn"
-    data-view="geodes"
-  >
-    <span>🎁</span>
-    Geodes
-  </button>
-
-  <button
-    class="navBtn"
-    data-view="forge"
-  >
-    <span>🔥</span>
-    Forge
-  </button>
-
-  <button
-    class="navBtn"
-    data-view="enchants"
-  >
-    <span>✨</span>
-    Enchants
-  </button>
-
+  <button class="navBtn active" data-view="mine"><span>⛏️</span>Mine</button>
+  <button class="navBtn" data-view="collection"><span>💎</span>Collection</button>
+  <button class="navBtn" data-view="geodes"><span>🎁</span>Geodes</button>
+  <button class="navBtn" data-view="forge"><span>🔥</span>Forge</button>
+  <button class="navBtn" data-view="systems"><span>🧭</span>Systems</button>
 </nav>
 
-
-<div class="modal" id="modal">
-  <div class="sheet" id="sheet">
-    <div class="sheetHandle"></div>
-    <div id="sheetContent"></div>
-  </div>
-</div>
-
+<div class="modal" id="modal"><div class="sheet" id="sheet"><div class="sheetHandle"></div><div id="sheetContent"></div></div></div>
 <div class="toast" id="toast"></div>
-
 
 <script>
 (() => {
-
 'use strict';
 
 const SAVE_KEY = 'orebound_save_v1';
-
-const fmt = n =>
-  Math.floor(n).toLocaleString();
-
-const clamp = (n,a,b) =>
-  Math.max(a,Math.min(b,n));
-
-const pick = a =>
-  a[Math.floor(Math.random()*a.length)];
-
-
-/* ==========================================
-   DEPTHS
-========================================== */
+const VERSION = 2;
+const fmt = n => Math.floor(Number(n)||0).toLocaleString();
+const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const now = () => Date.now();
+const escapeHTML = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const formatTime = ms => {
+  ms = Math.max(0,ms);
+  const sec = Math.ceil(ms/1000);
+  if(sec < 60) return `${sec}s`;
+  const min = Math.floor(sec/60), s = sec%60;
+  if(min < 60) return `${min}m ${s}s`;
+  const h = Math.floor(min/60), m = min%60;
+  return `${h}h ${m}m`;
+};
 
 const depths = [
-
-  {
-    name:'Surface Quarry',
-    a:'#2c3e37',
-    b:'#111815',
-    rock:8,
-    geode:.025
-  },
-
-  {
-    name:'Iron Caves',
-    a:'#34383f',
-    b:'#13161b',
-    rock:12,
-    geode:.03,
-    cost:{
-      coins:100,
-      ores:{
-        copper:25,
-        iron:15
-      }
-    }
-  },
-
-  {
-    name:'Crystal Caverns',
-    a:'#223c49',
-    b:'#101724',
-    rock:17,
-    geode:.038,
-    cost:{
-      coins:300,
-      ores:{
-        iron:40,
-        quartz:20,
-        silver:8
-      }
-    }
-  },
-
-  {
-    name:'Deepstone',
-    a:'#2d2b39',
-    b:'#111018',
-    rock:24,
-    geode:.045,
-    cost:{
-      coins:700,
-      ores:{
-        iron:65,
-        gold:12,
-        amethyst:15
-      }
-    }
-  },
-
-  {
-    name:'Magma Depths',
-    a:'#5a2a21',
-    b:'#190d0a',
-    rock:32,
-    geode:.052,
-    cost:{
-      coins:1400,
-      ores:{
-        obsidian:30,
-        ruby:10,
-        gold:20
-      }
-    }
-  },
-
-  {
-    name:'Ancient Hollow',
-    a:'#3b3326',
-    b:'#12100d',
-    rock:44,
-    geode:.06,
-    cost:{
-      coins:2800,
-      ores:{
-        glowstone:35,
-        stormsilver:18,
-        diamond:3
-      }
-    }
-  },
-
-  {
-    name:'The Abyss',
-    a:'#1b1c38',
-    b:'#080810',
-    rock:60,
-    geode:.07,
-    cost:{
-      coins:6000,
-      ores:{
-        stariron:30,
-        ghostcrystal:18,
-        magmaheart:7
-      }
-    }
-  },
-
-  {
-    name:'Earthcore',
-    a:'#4f1628',
-    b:'#0c0710',
-    rock:82,
-    geode:.082,
-    cost:{
-      coins:12000,
-      ores:{
-        voidquartz:25,
-        abyssium:10,
-        infernium:4
-      }
-    }
-  }
-
+  {name:'Surface Quarry',a:'#2c3e37',b:'#111815',rock:8,geode:.022},
+  {name:'Iron Caves',a:'#34383f',b:'#13161b',rock:12,geode:.027,cost:{coins:100,ores:{copper:25,iron:15}}},
+  {name:'Crystal Caverns',a:'#223c49',b:'#101724',rock:17,geode:.033,cost:{coins:320,ores:{iron:40,quartz:20,silver:8}}},
+  {name:'Deepstone',a:'#2d2b39',b:'#111018',rock:24,geode:.040,cost:{coins:750,ores:{iron:65,gold:12,amethyst:15}}},
+  {name:'Magma Depths',a:'#5a2a21',b:'#190d0a',rock:32,geode:.047,cost:{coins:1500,ores:{obsidian:30,ruby:10,gold:20}}},
+  {name:'Ancient Hollow',a:'#3b3326',b:'#12100d',rock:44,geode:.055,cost:{coins:3200,ores:{glowstone:35,stormsilver:18,diamond:3}}},
+  {name:'The Abyss',a:'#1b1c38',b:'#080810',rock:60,geode:.064,cost:{coins:7000,ores:{stariron:30,ghostcrystal:18,magmaheart:7}}},
+  {name:'Earthcore',a:'#4f1628',b:'#0c0710',rock:82,geode:.075,cost:{coins:15000,ores:{voidquartz:25,abyssium:10,infernium:4}}}
 ];
-
-
-/* ==========================================
-   50 ORES
-   first 25 real, final 25 fictional
-========================================== */
 
 const ores = [
+  ['stone','Stone','🪨',0,3,120,1,'real'],['coal','Coal','⚫',0,2,95,2,'real'],['copper','Copper','🟠',0,2,80,3,'real'],['iron','Iron','🔩',0,3,70,4,'real'],['tin','Tin','⚪',0,2,55,5,'real'],['quartz','Quartz','◇',0,3,48,6,'real'],['zinc','Zinc','◻️',0,2,43,7,'real'],['nickel','Nickel','🩶',0,3,38,8,'real'],['lead','Lead','⬛',0,2,34,9,'real'],['sulfur','Sulfur','🟡',1,4,30,11,'real'],['bauxite','Bauxite','🟤',1,3,27,13,'real'],['pyrite','Pyrite','✨',1,4,24,16,'real'],['silver','Silver','🌙',1,4,21,20,'real'],['cobalt','Cobalt','🔵',1,4,18,24,'real'],['amethyst','Amethyst','💜',2,4,16,30,'real'],['jade','Jade','🟢',2,4,14,36,'real'],['garnet','Garnet','🔴',2,4,12,44,'real'],['gold','Gold','🟨',2,5,10,55,'real'],['obsidian','Obsidian','⬟',3,5,9,68,'real'],['topaz','Topaz','🔶',3,5,8,82,'real'],['sapphire','Sapphire','💙',3,5,7,100,'real'],['ruby','Ruby','❤️',3,5,6,125,'real'],['emerald','Emerald','💚',4,5,5,155,'real'],['platinum','Platinum','🤍',4,6,4.2,200,'real'],['diamond','Diamond','💎',4,7,2.8,300,'real'],
+  ['glowstone','Glowstone','🌟',3,5,8.5,90,'fake'],['emberore','Ember Ore','🔥',4,5,7.5,110,'fake'],['frostite','Frostite','❄️',4,6,6.8,130,'fake'],['moonstone','Moonstone Ore','🌕',4,6,6.2,145,'fake'],['stormsilver','Stormsilver','⚡',4,6,5.7,165,'fake'],['deepcrystal','Deep Crystal','🔷',5,6,5.2,190,'fake'],['ashmetal','Ashmetal','🌫️',5,6,4.8,220,'fake'],['sunstone','Sunstone','☀️',5,6,4.4,250,'fake'],['bloodquartz','Blood Quartz','🩸',5,6,4,285,'fake'],['stariron','Star Iron','⭐',5,7,3.6,330,'fake'],['ghostcrystal','Ghost Crystal','👻',5,7,3.2,380,'fake'],['magmaheart','Magmaheart','🌋',5,7,2.9,440,'fake'],['nightstone','Nightstone','🌑',6,7,2.6,510,'fake'],['echoore','Echo Ore','〰️',6,7,2.3,590,'fake'],['astralite','Astralite','🌌',6,7,2,680,'fake'],['voidquartz','Void Quartz','🕳️',6,7,1.7,790,'fake'],['infernium','Infernium','☄️',6,7,1.45,920,'fake'],['abyssium','Abyssium','♠️',6,7,1.2,1080,'fake'],['dreamstone','Dreamstone','🫧',6,7,1,1280,'fake'],['corecrystal','Core Crystal','🔻',7,7,.8,1550,'fake'],['darkmatter','Darkmatter Ore','◼️',7,7,.62,1900,'fake'],['celestium','Celestium','🪽',7,7,.46,2400,'fake'],['godstone','Godstone','👁️',7,7,.32,3100,'fake'],['eternite','Eternite','♾️',7,7,.2,4200,'fake'],['genesis','Genesis Ore','🌈',7,7,.1,6000,'fake']
+].map((o,i)=>({id:o[0],name:o[1],icon:o[2],min:o[3],max:o[4],weight:o[5],value:o[6],kind:o[7],rank:i+1}));
+const oreMap = Object.fromEntries(ores.map(o=>[o.id,o]));
 
-  ['stone','Stone','🪨',0,3,120,1,'real'],
-  ['coal','Coal','⚫',0,2,95,2,'real'],
-  ['copper','Copper','🟠',0,2,80,3,'real'],
-  ['iron','Iron','🔩',0,3,70,4,'real'],
-  ['tin','Tin','⚪',0,2,55,5,'real'],
-  ['quartz','Quartz','◇',0,3,48,6,'real'],
-  ['zinc','Zinc','◻️',0,2,43,7,'real'],
-  ['nickel','Nickel','🩶',0,3,38,8,'real'],
-  ['lead','Lead','⬛',0,2,34,9,'real'],
-  ['sulfur','Sulfur','🟡',1,4,30,11,'real'],
-  ['bauxite','Bauxite','🟤',1,3,27,13,'real'],
-  ['pyrite','Pyrite','✨',1,4,24,16,'real'],
-  ['silver','Silver','🌙',1,4,21,20,'real'],
-  ['cobalt','Cobalt','🔵',1,4,18,24,'real'],
-  ['amethyst','Amethyst','💜',2,4,16,30,'real'],
-  ['jade','Jade','🟢',2,4,14,36,'real'],
-  ['garnet','Garnet','🔴',2,4,12,44,'real'],
-  ['gold','Gold','🟨',2,5,10,55,'real'],
-  ['obsidian','Obsidian','⬟',3,5,9,68,'real'],
-  ['topaz','Topaz','🔶',3,5,8,82,'real'],
-  ['sapphire','Sapphire','💙',3,5,7,100,'real'],
-  ['ruby','Ruby','❤️',3,5,6,125,'real'],
-  ['emerald','Emerald','💚',4,5,5,155,'real'],
-  ['platinum','Platinum','🤍',4,6,4.2,200,'real'],
-  ['diamond','Diamond','💎',4,7,2.8,300,'real'],
-
-  ['glowstone','Glowstone','🌟',3,5,8.5,90,'fake'],
-  ['emberore','Ember Ore','🔥',4,5,7.5,110,'fake'],
-  ['frostite','Frostite','❄️',4,6,6.8,130,'fake'],
-  ['moonstone','Moonstone Ore','🌕',4,6,6.2,145,'fake'],
-  ['stormsilver','Stormsilver','⚡',4,6,5.7,165,'fake'],
-  ['deepcrystal','Deep Crystal','🔷',5,6,5.2,190,'fake'],
-  ['ashmetal','Ashmetal','🌫️',5,6,4.8,220,'fake'],
-  ['sunstone','Sunstone','☀️',5,6,4.4,250,'fake'],
-  ['bloodquartz','Blood Quartz','🩸',5,6,4,285,'fake'],
-  ['stariron','Star Iron','⭐',5,7,3.6,330,'fake'],
-  ['ghostcrystal','Ghost Crystal','👻',5,7,3.2,380,'fake'],
-  ['magmaheart','Magmaheart','🌋',5,7,2.9,440,'fake'],
-  ['nightstone','Nightstone','🌑',6,7,2.6,510,'fake'],
-  ['echoore','Echo Ore','〰️',6,7,2.3,590,'fake'],
-  ['astralite','Astralite','🌌',6,7,2,680,'fake'],
-  ['voidquartz','Void Quartz','🕳️',6,7,1.7,790,'fake'],
-  ['infernium','Infernium','☄️',6,7,1.45,920,'fake'],
-  ['abyssium','Abyssium','♠️',6,7,1.2,1080,'fake'],
-  ['dreamstone','Dreamstone','🫧',6,7,1,1280,'fake'],
-  ['corecrystal','Core Crystal','🔻',7,7,.8,1550,'fake'],
-  ['darkmatter','Darkmatter Ore','◼️',7,7,.62,1900,'fake'],
-  ['celestium','Celestium','🪽',7,7,.46,2400,'fake'],
-  ['godstone','Godstone','👁️',7,7,.32,3100,'fake'],
-  ['eternite','Eternite','♾️',7,7,.2,4200,'fake'],
-  ['genesis','Genesis Ore','🌈',7,7,.1,6000,'fake']
-
-].map((o,i)=>({
-
-  id:o[0],
-  name:o[1],
-  icon:o[2],
-  min:o[3],
-  max:o[4],
-  weight:o[5],
-  value:o[6],
-  kind:o[7],
-  rank:i+1
-
-}));
-
-
-const oreMap =
-  Object.fromEntries(
-    ores.map(o=>[o.id,o])
-  );
-
-
-/* ==========================================
-   MASTERY
-========================================== */
-
-const milestones = [
-  10,
-  25,
-  50,
-  100,
-  250,
-  500,
-  1000
-];
-
-const variants = [
-  'Shiny',
-  'Prismatic',
-  'Ancient'
-];
-
-
-/* ==========================================
-   SETS
-========================================== */
+const milestones = [10,25,50,100,250,500,1000,2500,5000];
+const variants = ['Shiny','Prismatic','Ancient'];
 
 const sets = [
-
-  {
-    id:'industry',
-    name:'Industry',
-    icon:'⚙️',
-    ores:[
-      'coal',
-      'copper',
-      'iron',
-      'tin',
-      'zinc',
-      'nickel',
-      'lead',
-      'bauxite'
-    ],
-    reward:300
-  },
-
-  {
-    id:'gems',
-    name:'Gem Cabinet',
-    icon:'💍',
-    ores:[
-      'quartz',
-      'amethyst',
-      'jade',
-      'garnet',
-      'topaz',
-      'sapphire',
-      'ruby',
-      'emerald',
-      'diamond'
-    ],
-    reward:700
-  },
-
-  {
-    id:'precious',
-    name:'Precious Metals',
-    icon:'👑',
-    ores:[
-      'silver',
-      'gold',
-      'platinum',
-      'diamond'
-    ],
-    reward:900
-  },
-
-  {
-    id:'volcanic',
-    name:'Volcanic',
-    icon:'🌋',
-    ores:[
-      'sulfur',
-      'pyrite',
-      'obsidian',
-      'emberore',
-      'ashmetal',
-      'magmaheart'
-    ],
-    reward:1200
-  },
-
-  {
-    id:'strange',
-    name:'Deep Anomalies',
-    icon:'🔮',
-    ores:[
-      'glowstone',
-      'frostite',
-      'moonstone',
-      'stormsilver',
-      'deepcrystal',
-      'ghostcrystal'
-    ],
-    reward:1800
-  },
-
-  {
-    id:'celestial',
-    name:'Celestial',
-    icon:'🌌',
-    ores:[
-      'stariron',
-      'astralite',
-      'celestium',
-      'genesis'
-    ],
-    reward:3500
-  },
-
-  {
-    id:'abyss',
-    name:'Abyssal',
-    icon:'🕳️',
-    ores:[
-      'nightstone',
-      'echoore',
-      'voidquartz',
-      'abyssium',
-      'darkmatter',
-      'dreamstone'
-    ],
-    reward:5000
-  },
-
-  {
-    id:'core',
-    name:'Core Relics',
-    icon:'🔥',
-    ores:[
-      'infernium',
-      'corecrystal',
-      'godstone',
-      'eternite',
-      'genesis'
-    ],
-    reward:10000
-  }
-
+  {id:'industry',name:'Industry',icon:'⚙️',ores:['coal','copper','iron','tin','zinc','nickel','lead','bauxite'],reward:350},
+  {id:'gems',name:'Gem Cabinet',icon:'💍',ores:['quartz','amethyst','jade','garnet','topaz','sapphire','ruby','emerald','diamond'],reward:850},
+  {id:'precious',name:'Precious Metals',icon:'👑',ores:['silver','gold','platinum','diamond'],reward:1000},
+  {id:'volcanic',name:'Volcanic',icon:'🌋',ores:['sulfur','pyrite','obsidian','emberore','ashmetal','magmaheart'],reward:1500},
+  {id:'strange',name:'Deep Anomalies',icon:'🔮',ores:['glowstone','frostite','moonstone','stormsilver','deepcrystal','ghostcrystal'],reward:2200},
+  {id:'celestial',name:'Celestial',icon:'🌌',ores:['stariron','astralite','celestium','genesis'],reward:4500},
+  {id:'abyss',name:'Abyssal',icon:'🕳️',ores:['nightstone','echoore','voidquartz','abyssium','darkmatter','dreamstone'],reward:6500},
+  {id:'core',name:'Core Relics',icon:'🔥',ores:['infernium','corecrystal','godstone','eternite','genesis'],reward:12000}
 ];
 
+const materials = {
+  refinedmetal:{name:'Refined Metal',icon:'🧱'},
+  crystaldust:{name:'Crystal Dust',icon:'✨'},
+  gemessence:{name:'Gem Essence',icon:'💠'},
+  magmaalloy:{name:'Magma Alloy',icon:'🌋'},
+  voidmatter:{name:'Void Matter',icon:'🕳️'},
+  corealloy:{name:'Core Alloy',icon:'🔆'}
+};
 
-/* ==========================================
-   PICKAXES
-========================================== */
+const refineryRecipes = [
+  {id:'refinedmetal',name:'Refined Metal',icon:'🧱',unlock:3,ores:{iron:30,copper:20}},
+  {id:'crystaldust',name:'Crystal Dust',icon:'✨',unlock:3,ores:{quartz:20,amethyst:8}},
+  {id:'gemessence',name:'Gem Essence',icon:'💠',unlock:4,ores:{ruby:6,sapphire:6,emerald:6}},
+  {id:'magmaalloy',name:'Magma Alloy',icon:'🌋',unlock:4,ores:{obsidian:20,emberore:12,gold:8}},
+  {id:'voidmatter',name:'Void Matter',icon:'🕳️',unlock:6,ores:{nightstone:12,voidquartz:8,abyssium:3}},
+  {id:'corealloy',name:'Core Alloy',icon:'🔆',unlock:7,ores:{corecrystal:8,infernium:4,eternite:1}}
+];
 
 const pickaxes = [
-
-  {
-    name:'Rusty Pickaxe',
-    power:1,
-    cost:null
-  },
-
-  {
-    name:'Copper Pickaxe',
-    power:2,
-    cost:{
-      coins:40,
-      ores:{
-        copper:20,
-        stone:40
-      }
-    }
-  },
-
-  {
-    name:'Iron Pickaxe',
-    power:3,
-    cost:{
-      coins:120,
-      ores:{
-        iron:30,
-        copper:25
-      }
-    }
-  },
-
-  {
-    name:'Silver Pickaxe',
-    power:5,
-    cost:{
-      coins:350,
-      ores:{
-        silver:15,
-        iron:45
-      }
-    }
-  },
-
-  {
-    name:'Gold Pickaxe',
-    power:7,
-    cost:{
-      coins:800,
-      ores:{
-        gold:18,
-        obsidian:15
-      }
-    }
-  },
-
-  {
-    name:'Crystal Pickaxe',
-    power:10,
-    cost:{
-      coins:1600,
-      ores:{
-        amethyst:25,
-        sapphire:12,
-        glowstone:20
-      }
-    }
-  },
-
-  {
-    name:'Diamond Pickaxe',
-    power:14,
-    cost:{
-      coins:3500,
-      ores:{
-        diamond:8,
-        platinum:15,
-        deepcrystal:25
-      }
-    }
-  },
-
-  {
-    name:'Abyss Pickaxe',
-    power:19,
-    cost:{
-      coins:7500,
-      ores:{
-        stariron:25,
-        voidquartz:12,
-        abyssium:5
-      }
-    }
-  },
-
-  {
-    name:'Core Pickaxe',
-    power:26,
-    cost:{
-      coins:15000,
-      ores:{
-        corecrystal:8,
-        infernium:15,
-        diamond:20
-      }
-    }
-  },
-
-  {
-    name:'Genesis Pickaxe',
-    power:36,
-    cost:{
-      coins:30000,
-      ores:{
-        godstone:5,
-        eternite:2,
-        genesis:1
-      }
-    }
-  }
-
+  {name:'Rusty Pickaxe',power:1,cost:null},
+  {name:'Copper Pickaxe',power:2,cost:{coins:40,ores:{copper:20,stone:40}}},
+  {name:'Iron Pickaxe',power:3,cost:{coins:140,ores:{iron:30,copper:25}}},
+  {name:'Silver Pickaxe',power:5,cost:{coins:400,ores:{silver:15,iron:45}}},
+  {name:'Gold Pickaxe',power:7,cost:{coins:900,ores:{gold:18,obsidian:15}}},
+  {name:'Crystal Pickaxe',power:10,cost:{coins:1900,ores:{amethyst:25,sapphire:12,glowstone:20},mats:{crystaldust:2}}},
+  {name:'Diamond Pickaxe',power:14,cost:{coins:4200,ores:{diamond:8,platinum:15,deepcrystal:25},mats:{gemessence:2,refinedmetal:2}}},
+  {name:'Abyss Pickaxe',power:19,cost:{coins:9000,ores:{stariron:25,voidquartz:12,abyssium:5},mats:{voidmatter:2}}},
+  {name:'Core Pickaxe',power:26,cost:{coins:18000,ores:{corecrystal:8,infernium:15,diamond:20},mats:{corealloy:2}}},
+  {name:'Genesis Pickaxe',power:36,cost:{coins:35000,ores:{godstone:5,eternite:2,genesis:1},mats:{corealloy:4}}}
 ];
-
-
-/* ==========================================
-   GEODES
-========================================== */
 
 const geodes = {
-
-  common:{
-    name:'Common Geode',
-    icon:'🪨',
-    depth:1,
-    min:3,
-    max:5,
-    rare:1,
-    buy:250
-  },
-
-  crystal:{
-    name:'Crystal Geode',
-    icon:'🔮',
-    depth:3,
-    min:4,
-    max:6,
-    rare:1.35,
-    buy:900
-  },
-
-  magma:{
-    name:'Magma Geode',
-    icon:'🌋',
-    depth:5,
-    min:5,
-    max:7,
-    rare:1.55,
-    buy:2500
-  },
-
-  abyss:{
-    name:'Abyssal Geode',
-    icon:'🕳️',
-    depth:6,
-    min:6,
-    max:8,
-    rare:1.8,
-    buy:7000
-  },
-
-  core:{
-    name:'Core Geode',
-    icon:'🌈',
-    depth:7,
-    min:7,
-    max:10,
-    rare:2.1,
-    buy:16000
-  }
-
+  common:{name:'Common Geode',icon:'🪨',depth:1,min:8,max:15,rare:1.05,buy:700,guaranteed:0},
+  crystal:{name:'Crystal Geode',icon:'🔮',depth:3,min:15,max:30,rare:1.18,buy:2500,guaranteed:1},
+  magma:{name:'Magma Geode',icon:'🌋',depth:5,min:25,max:50,rare:1.32,buy:7000,guaranteed:2},
+  abyss:{name:'Abyssal Geode',icon:'🕳️',depth:6,min:40,max:80,rare:1.50,buy:18000,guaranteed:3},
+  core:{name:'Core Geode',icon:'🌈',depth:7,min:75,max:150,rare:1.75,buy:45000,guaranteed:5}
 };
-
-
-/* ==========================================
-   ENCHANTMENTS
-========================================== */
-
-const enchants = [
-
-  {
-    id:'fortune',
-    name:'Fortune',
-    icon:'🍀',
-    desc:l =>
-      `+${(l*3).toFixed(0)}% rare ore weighting`
-  },
-
-  {
-    id:'prospector',
-    name:'Prospector',
-    icon:'🧭',
-    desc:l =>
-      `+${(l*.7).toFixed(1)}% geode chance`
-  },
-
-  {
-    id:'efficiency',
-    name:'Efficiency',
-    icon:'⚒️',
-    desc:l =>
-      `+${l*12}% pick power`
-  },
-
-  {
-    id:'merchant',
-    name:'Merchant',
-    icon:'🪙',
-    desc:l =>
-      `+${l*8}% ore sell value`
-  },
-
-  {
-    id:'resonance',
-    name:'Resonance',
-    icon:'📡',
-    desc:l =>
-      `${l*3}% chance for an extra ore`
-  }
-
-];
-
-
-/* ==========================================
-   COSMETICS
-========================================== */
 
 const skins = {
-
-  steel:{
-    name:'Steel',
-    price:0,
-    cls:'skin-steel'
-  },
-
-  gold:{
-    name:'Gold Trim',
-    price:1200,
-    cls:'skin-gold'
-  },
-
-  obsidian:{
-    name:'Obsidian',
-    price:3000,
-    cls:'skin-obsidian'
-  },
-
-  neon:{
-    name:'Neon',
-    price:6500,
-    cls:'skin-neon'
-  }
-
+  steel:{name:'Steel',price:0,cls:'skin-steel'},gold:{name:'Gold Trim',price:1600,cls:'skin-gold'},
+  obsidian:{name:'Obsidian',price:4200,cls:'skin-obsidian'},neon:{name:'Neon',price:9000,cls:'skin-neon'}
 };
 
+const shopBoosts = {
+  rush:{name:'Miner’s Rush',icon:'⚡',price:700,duration:10*60*1000,desc:'2× pick power for 10 minutes.'},
+  magnet:{name:'Ore Magnet',icon:'🧲',price:900,duration:15*60*1000,desc:'Makes your Prospector target much easier to find for 15 minutes.',requiresProspector:true},
+  geodeFever:{name:'Geode Fever',icon:'🎁',price:1200,duration:15*60*1000,desc:'+4% absolute geode chance for 15 minutes.'},
+  luckyCharm:{name:'Lucky Charm',icon:'🍀',price:1500,duration:15*60*1000,desc:'2× rare-variant chance for 15 minutes.'},
+  heavyHaul:{name:'Heavy Haul',icon:'🛒',price:1100,duration:10*60*1000,desc:'+20% multi-drop chance for 10 minutes.'},
+  autoDrill:{name:'Auto Drill',icon:'🛠️',price:1800,duration:10*60*1000,desc:'Automatically swings once per second while the game is open.'}
+};
 
-/* ==========================================
-   SAVE DATA
-========================================== */
+const workshopDefs = [
+  {id:'power',name:'Tempered Head',icon:'⚒️',base:250,cap:15,unlock:2,effect:l=>`+${l*4}% pickaxe power`},
+  {id:'multi',name:'Wide Fracture',icon:'💥',base:300,cap:15,unlock:2,effect:l=>`+${l*2.5}% multi-drop chance`},
+  {id:'geodeAmount',name:'Geode Packing',icon:'🎁',base:450,cap:12,unlock:2,effect:l=>`+${l*6}% geode contents`},
+  {id:'geodeChance',name:'Fault Finder',icon:'📍',base:650,cap:10,unlock:3,effect:l=>`+${(l*.35).toFixed(2)}% geode chance`},
+  {id:'sell',name:'Better Appraisal',icon:'🪙',base:350,cap:15,unlock:2,effect:l=>`+${l*5}% sell value`},
+  {id:'variant',name:'Collector’s Lens',icon:'🌈',base:550,cap:10,unlock:3,effect:l=>`+${l*10}% variant odds`},
+  {id:'focus',name:'Focus Calibration',icon:'🧭',base:500,cap:12,unlock:2,effect:l=>`+${l*6}% Prospector focus strength`},
+  {id:'expedition',name:'Field Logistics',icon:'🎒',base:900,cap:12,unlock:4,effect:l=>`+${l*8}% expedition yield`},
+  {id:'mastery',name:'Collector Training',icon:'📚',base:700,cap:10,unlock:3,effect:l=>`+${l*3}% mastery XP`}
+];
+
+const enchantDefs = [
+  {id:'fortune',name:'Fortune',icon:'🍀',unlock:2,desc:l=>`Rare ores weighted up to ${l*8}% more strongly`,cost:l=>({coins:500*l,ores:{gold:5*l,amethyst:5*l},mats:{crystaldust:Math.ceil(l/2)}})},
+  {id:'excavator',name:'Excavator',icon:'💥',unlock:2,desc:l=>`+${l*5}% multi-drop chance`,cost:l=>({coins:450*l,ores:{iron:20*l,copper:15*l},mats:{refinedmetal:Math.ceil(l/2)}})},
+  {id:'prospector',name:'Prospector’s Eye',icon:'🧭',unlock:2,desc:l=>`+${l*12}% target focus strength`,cost:l=>({coins:550*l,ores:{silver:10*l,quartz:12*l},mats:{crystaldust:Math.ceil(l/2)}})},
+  {id:'geodeHunter',name:'Geode Hunter',icon:'🎁',unlock:2,desc:l=>`+${(l*.8).toFixed(1)}% geode chance`,cost:l=>({coins:650*l,ores:{quartz:15*l,amethyst:8*l},mats:{crystaldust:l}})},
+  {id:'geodeHeart',name:'Geode Heart',icon:'💠',unlock:2,desc:l=>`+${l*10}% geode contents`,cost:l=>({coins:700*l,ores:{jade:10*l,amethyst:4*l},mats:{crystaldust:l}})},
+  {id:'merchant',name:'Merchant',icon:'🪙',unlock:2,desc:l=>`+${l*8}% ore sell value`,cost:l=>({coins:500*l,ores:{gold:8*l,silver:10*l},mats:{refinedmetal:Math.ceil(l/2)}})},
+  {id:'echo',name:'Echo',icon:'📡',unlock:5,desc:l=>`${l*4}% chance to repeat the entire ore drop`,cost:l=>({coins:1600*l,ores:{ghostcrystal:6*l,deepcrystal:8*l},mats:{gemessence:l}})},
+  {id:'fracture',name:'Fracture',icon:'⚡',unlock:5,desc:l=>`${l*2}% chance each swing instantly breaks the rock`,cost:l=>({coins:1800*l,ores:{obsidian:15*l,magmaheart:3*l},mats:{magmaalloy:l}})},
+  {id:'mastery',name:'Mastery',icon:'📚',unlock:5,desc:l=>`+${l*8}% mastery XP`,cost:l=>({coins:1700*l,ores:{diamond:2*l,stariron:5*l},mats:{gemessence:l}})},
+  {id:'homebound',name:'Homebound',icon:'🏠',unlock:5,desc:l=>`Revisit power bonus gains +${l*2}% per depth behind`,cost:l=>({coins:1500*l,ores:{ashmetal:8*l,stormsilver:8*l},mats:{refinedmetal:l}})},
+  {id:'deepborn',name:'Deepborn',icon:'⬇️',unlock:5,desc:l=>`+${l*6}% power at your deepest unlocked depth`,cost:l=>({coins:1800*l,ores:{magmaheart:4*l,ghostcrystal:5*l},mats:{magmaalloy:l}})}
+];
+const enchantMap = Object.fromEntries(enchantDefs.map(e=>[e.id,e]));
+
+const systemDefs = [
+  {id:'prospector',name:'Prospector',icon:'🧭',unlock:1,req:'Copper Pickaxe or Iron Caves'},
+  {id:'workshop',name:'Workshop',icon:'🛠️',unlock:2,req:'Crystal Caverns'},
+  {id:'enchants',name:'Enchantments',icon:'✨',unlock:2,req:'Crystal Caverns'},
+  {id:'refinery',name:'Refinery',icon:'🏭',unlock:3,req:'Deepstone'},
+  {id:'expeditions',name:'Expeditions',icon:'🎒',unlock:4,req:'Magma Depths'},
+  {id:'market',name:'Deep Market',icon:'🛒',unlock:6,req:'The Abyss'},
+  {id:'core',name:'Core Forge',icon:'🔆',unlock:7,req:'Earthcore'}
+];
+
+const coreUpgradeDefs = [
+  {id:'power',name:'Inherited Strength',icon:'⚒️',effect:l=>`+${l*8}% permanent pick power`},
+  {id:'mastery',name:'Perfect Memory',icon:'📚',effect:l=>`+${l*10}% mastery XP`},
+  {id:'multi',name:'Fractured Memory',icon:'💥',effect:l=>`+${l*4}% multi-drop chance`},
+  {id:'geodes',name:'Packed Memory',icon:'🎁',effect:l=>`+${l*10}% geode contents`},
+  {id:'expedition',name:'Field Memory',icon:'🎒',effect:l=>`+${l*10}% expedition yield`},
+  {id:'focus',name:'Prospector Memory',icon:'🧭',effect:l=>`+${l*10}% Prospector focus`},
+  {id:'startCoins',name:'Old Fortune',icon:'🪙',effect:l=>`Start each life with ${fmt(l*500)} coins`}
+];
 
 const fresh = () => ({
-
-  version:1,
-
-  coins:0,
-
-  depth:0,
-  unlockedDepth:0,
-
-  pickaxe:0,
-
-  rockHp:depths[0].rock,
-
-  inventory:{},
-  lifetime:{},
-  variants:{},
-
-  geodes:{
-    common:0,
-    crystal:0,
-    magma:0,
-    abyss:0,
-    core:0
-  },
-
-  setClaims:{},
-
-  enchSlots:[
-    {
-      unlocked:true,
-      ench:null
-    },
-    {
-      unlocked:false,
-      ench:null
-    },
-    {
-      unlocked:false,
-      ench:null
-    }
-  ],
-
-  skinsOwned:{
-    steel:true
-  },
-
-  skin:'steel',
-
-  rushUntil:0,
-
-  totalMined:0,
-
-  lastSave:Date.now()
-
+  version:VERSION,coins:0,depth:0,unlockedDepth:0,pickaxe:0,rockHp:depths[0].rock,
+  inventory:{},lifetime:{},masteryXP:{},variants:{},
+  geodes:{common:0,crystal:0,magma:0,abyss:0,core:0},setClaims:{},
+  materials:{refinedmetal:0,crystaldust:0,gemessence:0,magmaalloy:0,voidmatter:0,corealloy:0},
+  prospectorTarget:null,workshop:{power:0,multi:0,geodeAmount:0,geodeChance:0,sell:0,variant:0,focus:0,expedition:0,mastery:0},
+  enchantBook:{},enchantBlueprints:{},equippedEnchants:[null,null,null,null,null],
+  expeditions:[null],expeditionSlots:1,expeditionDrafts:[],
+  boosts:{rush:0,magnet:0,geodeFever:0,luckyCharm:0,heavyHaul:0,autoDrill:0,geodeBoosterCharges:0},
+  marketSalt:0,marketBought:{},marketRefreshCycle:0,marketRefreshCount:0,
+  skinsOwned:{steel:true},skin:'steel',buybackOre:null,totalMined:0,
+  life:0,coreShards:0,coreUpgrades:{power:0,mastery:0,multi:0,geodes:0,expedition:0,focus:0,startCoins:0},
+  activeSystem:'prospector',
+  dev:{used:false,infiniteCoins:false,oneHit:false,multi100:false,geode100:false,systemsAll:false,forceOre:null,forceVariant:null},
+  lastSave:now()
 });
 
+function migrate(data){
+  const base = fresh();
+  const d = Object.assign(base,data||{});
+  d.version = VERSION;
+  d.inventory = Object.assign({},data?.inventory||{});
+  d.lifetime = Object.assign({},data?.lifetime||{});
+  d.masteryXP = Object.assign({},data?.masteryXP||data?.lifetime||{});
+  d.variants = Object.assign({},data?.variants||{});
+  d.geodes = Object.assign(base.geodes,data?.geodes||{});
+  d.materials = Object.assign(base.materials,data?.materials||{});
+  d.workshop = Object.assign(base.workshop,data?.workshop||{});
+  d.boosts = Object.assign(base.boosts,data?.boosts||{});
+  d.coreUpgrades = Object.assign(base.coreUpgrades,data?.coreUpgrades||{});
+  d.dev = Object.assign(base.dev,data?.dev||{});
+  d.skinsOwned = Object.assign({steel:true},data?.skinsOwned||{});
+  d.setClaims = Object.assign({},data?.setClaims||{});
+  d.enchantBook = Object.assign({},data?.enchantBook||{});
+  d.enchantBlueprints = Object.assign({},data?.enchantBlueprints||{});
+  d.marketBought = Object.assign({},data?.marketBought||{});
+  d.equippedEnchants = Array.isArray(data?.equippedEnchants) ? [...data.equippedEnchants].slice(0,5) : [null,null,null,null,null];
+  while(d.equippedEnchants.length<5)d.equippedEnchants.push(null);
+  d.expeditions = Array.isArray(data?.expeditions) ? [...data.expeditions] : [null];
+  d.expeditionDrafts = Array.isArray(data?.expeditionDrafts) ? [...data.expeditionDrafts] : [];
+  d.expeditionSlots = clamp(Number(data?.expeditionSlots||d.expeditions.length||1),1,3);
+  while(d.expeditions.length<d.expeditionSlots)d.expeditions.push(null);
+  d.expeditions = d.expeditions.slice(0,d.expeditionSlots);
 
-let S = load();
-
-let filter = 'all';
-
-let toastTimer;
-
-
-/* ==========================================
-   SAVE / LOAD
-========================================== */
+  if(!data?.enchantBook && Array.isArray(data?.enchSlots)){
+    const oldMap={resonance:'echo',efficiency:'excavator'};
+    data.enchSlots.forEach((slot,i)=>{
+      if(slot?.ench?.id){
+        const id=oldMap[slot.ench.id]||slot.ench.id;
+        d.enchantBook[id] = Math.max(d.enchantBook[id]||0,slot.ench.level||1);
+        d.enchantBlueprints[id] = true;
+        if(i<5)d.equippedEnchants[i]=id;
+      }
+    });
+  }
+  if(data?.rushUntil && !d.boosts.rush)d.boosts.rush=data.rushUntil;
+  d.depth = clamp(Number(d.depth)||0,0,7);
+  d.unlockedDepth = clamp(Number(d.unlockedDepth)||0,0,7);
+  d.pickaxe = clamp(Number(d.pickaxe)||0,0,pickaxes.length-1);
+  d.rockHp = Number(d.rockHp)>0 ? Number(d.rockHp) : depths[d.depth].rock;
+  return d;
+}
 
 function load(){
-
   try{
-
-    const raw =
-      localStorage.getItem(SAVE_KEY);
-
-    if(!raw)
-      return fresh();
-
-    const d =
-      JSON.parse(raw);
-
-    return Object.assign(
-      fresh(),
-      d,
-      {
-        inventory:
-          d.inventory || {},
-
-        lifetime:
-          d.lifetime || {},
-
-        variants:
-          d.variants || {},
-
-        geodes:
-          Object.assign(
-            fresh().geodes,
-            d.geodes || {}
-          ),
-
-        setClaims:
-          d.setClaims || {},
-
-        skinsOwned:
-          Object.assign(
-            {steel:true},
-            d.skinsOwned || {}
-          )
-      }
-    );
-
-  }
-  catch(e){
-
-    return fresh();
-
-  }
-
+    const raw = localStorage.getItem(SAVE_KEY);
+    return raw ? migrate(JSON.parse(raw)) : fresh();
+  }catch(e){ return fresh(); }
 }
-
+let S = load();
+let collectionFilter = 'all';
+let toastTimer = null;
+let brandTapCount = 0;
+let brandTapTimer = null;
 
 function save(){
-
-  S.lastSave =
-    Date.now();
-
-  localStorage.setItem(
-    SAVE_KEY,
-    JSON.stringify(S)
-  );
-
-  const el =
-    document.getElementById('saveNote');
-
-  if(el){
-
-    el.textContent =
-      'Saved just now';
-
-    clearTimeout(save._t);
-
-    save._t =
-      setTimeout(
-        () =>
-          el.textContent='Saved locally',
-        1200
-      );
-
+  S.lastSave=now();
+  const el=document.getElementById('saveNote');
+  try{
+    localStorage.setItem(SAVE_KEY,JSON.stringify(S));
+    if(el){el.textContent='Saved just now';clearTimeout(save._t);save._t=setTimeout(()=>el.textContent='Saved locally',1100)}
+  }catch(err){
+    if(el)el.textContent='Save unavailable';
   }
-
 }
 
+const getInv = id => Number(S.inventory[id]||0);
+const getLife = id => Number(S.lifetime[id]||0);
+const getMastery = id => Number(S.masteryXP[id]||0);
+const getMat = id => Number(S.materials[id]||0);
+const workshopLevel = id => Number(S.workshop[id]||0);
+const coreLevel = id => Number(S.coreUpgrades[id]||0);
+const boostActive = id => Number(S.boosts[id]||0) > now();
+const hasCoins = n => S.dev.infiniteCoins || S.coins >= n;
+function spendCoins(n){ if(!S.dev.infiniteCoins)S.coins=Math.max(0,S.coins-n); }
 
-/* ==========================================
-   COLLECTION HELPERS
-========================================== */
+function getMasterLevel(xp){let l=0;for(const m of milestones)if(xp>=m)l++;return l}
+function nextMilestone(xp){return milestones.find(m=>xp<m)||null}
+function masterReward(level){return 25*level*level}
+function masteryMultiplier(){return 1 + S.life*.10 + workshopLevel('mastery')*.03 + coreLevel('mastery')*.10 + equippedLevel('mastery')*.08}
 
-function getInv(id){
-  return S.inventory[id] || 0;
+function equippedLevel(id){
+  if(!S.equippedEnchants.includes(id))return 0;
+  return Number(S.enchantBook[id]||0);
 }
-
-function getLife(id){
-  return S.lifetime[id] || 0;
-}
-
-
-function masterReward(level){
-
-  return 20 * level * level;
-
-}
-
-
-function getMasterLevel(life){
-
-  let level = 0;
-
-  for(const milestone of milestones){
-
-    if(life >= milestone)
-      level++;
-
-  }
-
-  return level;
-
-}
-
-
-function nextMilestone(life){
-
-  return (
-    milestones.find(
-      m => life < m
-    ) || null
-  );
-
-}
-
-
-function addOre(
-  id,
-  n=1,
-  opts={}
-){
-
-  const o =
-    oreMap[id];
-
-  if(!o)
-    return;
-
-  const first =
-    getLife(id) === 0;
-
-
-  S.inventory[id] =
-    getInv(id) + n;
-
-  S.lifetime[id] =
-    getLife(id) + n;
-
-  S.totalMined += n;
-
-
-  if(
-    first &&
-    !opts.silent
-  ){
-
-    showDiscovery(
-      o,
-      null
-    );
-
-  }
-
-
-  const before =
-    getMasterLevel(
-      S.lifetime[id] - n
-    );
-
-  const after =
-    getMasterLevel(
-      S.lifetime[id]
-    );
-
-
-  if(
-    after > before &&
-    !first
-  ){
-
-    const reward =
-      masterReward(after);
-
-    S.coins += reward;
-
-    toast(
-      `${o.name} mastery milestone: ` +
-      `${milestones[after-1]} found! ` +
-      `+${reward} coins`
-    );
-
-  }
-
-
-  if(!opts.noVariant){
-
-    rollVariant(o);
-
-  }
-
-}
-
-
-/* ==========================================
-   ENCHANTMENT TOTALS
-========================================== */
-
-function enchTotal(id){
-
-  return S.enchSlots.reduce(
-    (total,slot) => {
-
-      if(
-        slot.unlocked &&
-        slot.ench?.id === id
-      ){
-
-        return (
-          total +
-          slot.ench.level
-        );
-
-      }
-
-      return total;
-
-    },
-    0
-  );
-
-}
-
-
-function pickPower(){
-
-  let power =
-    pickaxes[S.pickaxe].power;
-
-
-  power *=
-    1 +
-    enchTotal('efficiency') *
-    .12;
-
-
-  if(
-    Date.now() <
-    S.rushUntil
-  ){
-
-    power *= 2;
-
-  }
-
-
-  return Math.max(
-    1,
-    Math.floor(power)
-  );
-
-}
-
-
-function rareBoost(){
-
-  return (
-    1 +
-    enchTotal('fortune') *
-    .03
-  );
-
-}
-
-
-function sellBoost(){
-
-  return (
-    1 +
-    enchTotal('merchant') *
-    .08
-  );
-
-}
-
-
-function oreSellValue(o){
-
-  const mastery =
-    getMasterLevel(
-      getLife(o.id)
-    );
-
-  return Math.max(
-    1,
-    Math.floor(
-      o.value *
-      sellBoost() *
-      (
-        1 +
-        mastery *
-        .03
-      )
-    )
-  );
-
-}
-
-
-function geodeChance(){
-
-  return (
-    depths[S.depth].geode +
-    enchTotal('prospector') *
-    .007
-  );
-
-}
-
-
-function resonanceChance(){
-
-  return (
-    enchTotal('resonance') *
-    .03
-  );
-
-}
-
-
-/* ==========================================
-   ORE ROLLING
-========================================== */
-
-function rollOreAtDepth(
-  depthIndex,
-  boost=1
-){
-
-  const pool =
-    ores.filter(
-      o =>
-        o.min <= depthIndex &&
-        o.max >= depthIndex
-    );
-
-
-  const rb =
-    rareBoost() * boost;
-
-
-  const weights =
-    pool.map(o => {
-
-      let weight =
-        o.weight;
-
-
-      const rarity =
-        Math.max(
-          1,
-          o.rank / 12
-        );
-
-
-      weight *=
-        Math.pow(
-          rb,
-          Math.min(
-            3,
-            rarity * .22
-          )
-        );
-
-
-      const center =
-        (o.min + o.max) / 2;
-
-
-      const distance =
-        Math.abs(
-          depthIndex -
-          center
-        );
-
-
-      weight *=
-        Math.max(
-          .35,
-          1 -
-          distance *
-          .18
-        );
-
-
-      return weight;
-
-    });
-
-
-  let sum =
-    weights.reduce(
-      (a,b) => a+b,
-      0
-    );
-
-
-  let random =
-    Math.random() * sum;
-
-
-  for(
-    let i=0;
-    i<pool.length;
-    i++
-  ){
-
-    random -=
-      weights[i];
-
-
-    if(random <= 0){
-
-      return pool[i];
-
+function availableEnchantSlots(){return 1 + (S.pickaxe>=3?1:0) + (S.pickaxe>=5?1:0) + (S.pickaxe>=7?1:0) + (S.pickaxe>=9?1:0)}
+
+function addMastery(id,baseAmount){
+  const before=getMastery(id);
+  const exact=baseAmount*masteryMultiplier();
+  let gain=Math.floor(exact);
+  if(Math.random()<(exact-gain))gain++;
+  gain=Math.max(baseAmount,gain);
+  const after=before+gain;
+  S.masteryXP[id]=after;
+  const beforeLevel=getMasterLevel(before), afterLevel=getMasterLevel(after);
+  if(afterLevel>beforeLevel){
+    for(let lvl=beforeLevel+1;lvl<=afterLevel;lvl++){
+      const reward=masterReward(lvl);
+      S.coins+=reward;
+      toast(`${oreMap[id].name} mastery ${milestones[lvl-1]}! +${fmt(reward)} coins`);
     }
-
   }
-
-
-  return pool[0];
-
 }
 
-
-/* ==========================================
-   VARIANTS
-========================================== */
-
-function rollVariant(o){
-
-  const chance =
-    .012 +
-    Math.max(
-      0,
-      o.rank - 20
-    ) *
-    .00012;
-
-
-  if(
-    Math.random() <
-    chance
-  ){
-
-    let variant;
-
-
-    const firstRoll =
-      Math.random();
-
-
-    if(firstRoll < .72){
-
-      variant =
-        'Shiny';
-
-    }
-    else{
-
-      const secondRoll =
-        Math.random();
-
-      variant =
-        secondRoll < .82
-        ? 'Prismatic'
-        : 'Ancient';
-
-    }
-
-
-    S.variants[o.id] =
-      S.variants[o.id] || {};
-
-
-    S.variants[o.id][variant] =
-      (
-        S.variants[o.id][variant] ||
-        0
-      ) + 1;
-
-
-    setTimeout(
-      () =>
-        showDiscovery(
-          o,
-          variant
-        ),
-      120
-    );
-
-  }
-
+function addOre(id,n=1,opts={}){
+  const o=oreMap[id];if(!o||n<=0)return;
+  const first=getLife(id)===0;
+  S.inventory[id]=getInv(id)+n;
+  S.lifetime[id]=getLife(id)+n;
+  addMastery(id,n);
+  S.totalMined+=n;
+  if(first&&!opts.silent)showDiscovery(o,null);
+  if(!opts.noVariant)rollVariants(o,n,opts.variantCollector);
 }
 
-
-/* ==========================================
-   GEODE TYPE BY DEPTH
-========================================== */
-
-function geodeTypeForDepth(d){
-
-  if(d >= 7){
-
-    return (
-      Math.random() < .35
-      ? 'core'
-      : 'abyss'
-    );
-
+function variantChance(o){
+  let c=.0045 + Math.max(0,o.rank-25)*.000025;
+  c*=1+workshopLevel('variant')*.10;
+  if(boostActive('luckyCharm'))c*=2;
+  return Math.min(.035,c);
+}
+function rollVariants(o,n,collector=null){
+  let totalChance=variantChance(o)*n;
+  let hits=Math.floor(totalChance);
+  if(Math.random()<totalChance-hits)hits++;
+  for(let i=0;i<hits;i++){
+    const r=Math.random();const v=r<.76?'Shiny':r<.96?'Prismatic':'Ancient';
+    S.variants[o.id]=S.variants[o.id]||{};
+    S.variants[o.id][v]=(S.variants[o.id][v]||0)+1;
+    if(collector){collector.push({ore:o.id,variant:v});}
+    else setTimeout(()=>showDiscovery(o,v),100);
   }
-
-  if(d >= 6)
-    return 'abyss';
-
-  if(d >= 4)
-    return 'magma';
-
-  if(d >= 2)
-    return 'crystal';
-
-  return 'common';
-
 }
 
+function revisitSteps(depth=S.depth){return Math.max(0,S.unlockedDepth-depth)}
+function revisitPowerBonus(depth=S.depth){
+  const steps=Math.min(4,revisitSteps(depth));
+  return steps*(.10 + equippedLevel('homebound')*.02);
+}
+function revisitMultiBonus(depth=S.depth){return Math.min(.12,revisitSteps(depth)*.03)}
+function pickPower(depth=S.depth){
+  let p=pickaxes[S.pickaxe].power;
+  p*=1+workshopLevel('power')*.04+coreLevel('power')*.08+S.life*.08;
+  p*=1+revisitPowerBonus(depth);
+  if(depth===S.unlockedDepth)p*=1+equippedLevel('deepborn')*.06;
+  if(boostActive('rush'))p*=2;
+  return Math.max(1,Math.floor(p));
+}
+function multiChance(depth=S.depth){
+  if(S.dev.multi100)return 1;
+  let c=.04*S.pickaxe + workshopLevel('multi')*.025 + coreLevel('multi')*.04 + equippedLevel('excavator')*.05 + revisitMultiBonus(depth);
+  if(boostActive('heavyHaul'))c+=.20;
+  return clamp(c,0,.88);
+}
+function geodeChance(depth=S.depth){
+  if(S.dev.geode100)return 1;
+  let c=depths[depth].geode + workshopLevel('geodeChance')*.0035 + equippedLevel('geodeHunter')*.008;
+  if(boostActive('geodeFever'))c+=.04;
+  return clamp(c,0,.35);
+}
+function geodeContentMultiplier(){return 1+workshopLevel('geodeAmount')*.06+coreLevel('geodes')*.10+equippedLevel('geodeHeart')*.10}
+function sellMultiplier(){return 1+workshopLevel('sell')*.05+equippedLevel('merchant')*.08}
+function expeditionMultiplier(){return 1+workshopLevel('expedition')*.08+coreLevel('expedition')*.10+S.life*.05}
+function prospectorMultiplier(){
+  let m=2.25 + workshopLevel('focus')*.06 + coreLevel('focus')*.10 + equippedLevel('prospector')*.12;
+  if(boostActive('magnet'))m+=.75;
+  return m;
+}
+function rareMultiplierForOre(o){return 1 + equippedLevel('fortune')*.08*(o.rank/50)}
 
-/* ==========================================
-   MINING
-========================================== */
-
-function mine(){
-
-  const btn =
-    document.getElementById(
-      'rockBtn'
-    );
-
-
-  btn.classList.add('hit');
-
-
-  setTimeout(
-    () =>
-      btn.classList.remove('hit'),
-    90
-  );
-
-
-  S.rockHp -=
-    pickPower();
-
-
-  if(S.rockHp > 0){
-
-    document.getElementById(
-      'dropLine'
-    ).textContent =
-      `${Math.ceil(S.rockHp)} rock HP left`;
-
-
-    save();
-
-    renderMine();
-
-    return;
-
+function getWeightedPool(depthIndex,options={}){
+  const target = options.target===undefined ? S.prospectorTarget : options.target;
+  const targetStrength = options.targetStrength===undefined ? 1 : options.targetStrength;
+  const pool=ores.filter(o=>o.min<=depthIndex&&o.max>=depthIndex);
+  return pool.map(o=>{
+    let weight=o.weight;
+    const center=(o.min+o.max)/2;
+    const distance=Math.abs(depthIndex-center);
+    weight*=Math.max(.38,1-distance*.16);
+    weight*=rareMultiplierForOre(o);
+    if(target&&o.id===target)weight*=1+(prospectorMultiplier()-1)*targetStrength;
+    return {ore:o,weight};
+  });
+}
+function rollOreAtDepth(depthIndex,options={}){
+  if(S.dev.forceOre&&oreMap[S.dev.forceOre])return oreMap[S.dev.forceOre];
+  const weighted=getWeightedPool(depthIndex,options);
+  const rareBoost=options.rareBoost||1;
+  if(rareBoost!==1){
+    weighted.forEach(x=>{x.weight*=1+(rareBoost-1)*(x.ore.rank/50)});
   }
-
-
-  S.rockHp =
-    depths[S.depth].rock;
-
-
-  const ore =
-    rollOreAtDepth(
-      S.depth
-    );
-
-
-  addOre(
-    ore.id,
-    1
-  );
-
-
-  let message =
-    `${ore.icon} ${ore.name} +1`;
-
-
-  if(
-    Math.random() <
-    resonanceChance()
-  ){
-
-    addOre(
-      ore.id,
-      1,
-      {
-        silent:true
-      }
-    );
-
-    message +=
-      ' • Resonance +1';
-
-  }
-
-
-  if(
-    Math.random() <
-    geodeChance()
-  ){
-
-    const type =
-      geodeTypeForDepth(
-        S.depth
-      );
-
-
-    S.geodes[type] =
-      (
-        S.geodes[type] ||
-        0
-      ) + 1;
-
-
-    message +=
-      ` • ${geodes[type].icon} Geode!`;
-
-  }
-
-
-  const line =
-    document.getElementById(
-      'dropLine'
-    );
-
-
-  line.textContent =
-    message;
-
-
-  line.classList.remove(
-    'pop'
-  );
-
-
-  void line.offsetWidth;
-
-
-  line.classList.add(
-    'pop'
-  );
-
-
-  save();
-
-  renderAll(false);
-
+  let sum=weighted.reduce((a,b)=>a+b.weight,0), r=Math.random()*sum;
+  for(const x of weighted){r-=x.weight;if(r<=0)return x.ore}
+  return weighted[0].ore;
+}
+function oreProbability(id,depthIndex){
+  const weighted=getWeightedPool(depthIndex);
+  const sum=weighted.reduce((a,b)=>a+b.weight,0);
+  const row=weighted.find(x=>x.ore.id===id);
+  return row?row.weight/sum:0;
+}
+function rollRareOre(depthIndex,rareBoost=1){
+  const pool=getWeightedPool(depthIndex).sort((a,b)=>b.ore.rank-a.ore.rank);
+  const slice=pool.slice(0,Math.max(2,Math.ceil(pool.length*.28)));
+  let sum=slice.reduce((a,b)=>a+b.weight*(1+(rareBoost-1)*(b.ore.rank/50)),0),r=Math.random()*sum;
+  for(const x of slice){r-=x.weight*(1+(rareBoost-1)*(x.ore.rank/50));if(r<=0)return x.ore}
+  return slice[0].ore;
 }
 
+function calcDropQuantity(o){
+  let qty=1;
+  if(Math.random()<multiChance())qty++;
+  const commonScale=o.rank<=15?1:o.rank<=30?.45:0;
+  if(commonScale>0){
+    const c=clamp((S.pickaxe*.045+revisitSteps()*.025)*commonScale,0,.70);
+    if(Math.random()<c)qty+=1+Math.floor(S.pickaxe/4);
+    if(S.pickaxe>=6&&Math.random()<c*.35)qty++;
+  }
+  return qty;
+}
+function expectedDropQty(o,depthIndex){
+  let qty=1+multiChance(depthIndex);
+  const commonScale=o.rank<=15?1:o.rank<=30?.45:0;
+  if(commonScale>0){
+    const c=clamp((S.pickaxe*.045+revisitSteps(depthIndex)*.025)*commonScale,0,.70);
+    qty+=c*(1+Math.floor(S.pickaxe/4));
+    if(S.pickaxe>=6)qty+=c*.35;
+  }
+  qty*=1+equippedLevel('echo')*.04;
+  return qty;
+}
+function farmEfficiency(id,depthIndex){
+  const o=oreMap[id];if(!o)return 0;
+  const probability=oreProbability(id,depthIndex);
+  const breaksPerSwing=pickPower(depthIndex)/depths[depthIndex].rock;
+  return probability*expectedDropQty(o,depthIndex)*breaksPerSwing;
+}
 
-/* ==========================================
-   COST SYSTEM
-========================================== */
+function geodeTypeForDepth(d){if(d>=7)return Math.random()<.35?'core':'abyss';if(d>=6)return'abyss';if(d>=4)return'magma';if(d>=2)return'crystal';return'common'}
+
+function mine(auto=false){
+  const btn=document.getElementById('rockBtn');
+  if(!auto&&btn){btn.classList.add('hit');setTimeout(()=>btn.classList.remove('hit'),90)}
+  const fracture = equippedLevel('fracture')*.02;
+  const instant=S.dev.oneHit||Math.random()<fracture;
+  S.rockHp-=instant?S.rockHp:pickPower();
+  if(S.rockHp>0){
+    document.getElementById('dropLine').textContent=instant?'Fracture!':`${Math.ceil(S.rockHp)} rock HP left`;
+    save();renderMine();return;
+  }
+  S.rockHp=depths[S.depth].rock;
+  const ore=rollOreAtDepth(S.depth);
+  let qty=calcDropQuantity(ore);
+  if(Math.random()<equippedLevel('echo')*.04)qty*=2;
+  const forcedVariant=S.dev.forceVariant;
+  const collector=[];
+  const first=getLife(ore.id)===0;
+  addOre(ore.id,qty,{silent:true,noVariant:!!forcedVariant,variantCollector:collector});
+  if(forcedVariant){
+    S.variants[ore.id]=S.variants[ore.id]||{};
+    S.variants[ore.id][forcedVariant]=(S.variants[ore.id][forcedVariant]||0)+1;
+  }
+  let message=`${ore.icon} ${ore.name} ×${qty}`;
+  if(first)message+=' • NEW';
+  if(forcedVariant)message+=` • ${forcedVariant}`;
+  if(Math.random()<geodeChance()){
+    const type=geodeTypeForDepth(S.depth);S.geodes[type]=(S.geodes[type]||0)+1;message+=` • ${geodes[type].icon} Geode!`;
+  }
+  const line=document.getElementById('dropLine');line.textContent=message;line.classList.remove('pop');void line.offsetWidth;line.classList.add('pop');
+  if(first&&!auto)showDiscovery(ore,null);
+  if(collector.length&&!auto){const v=collector[0];showDiscovery(ore,v.variant)}
+  save();renderAll(false);
+}
 
 function canAfford(cost){
-
-  if(!cost)
-    return false;
-
-
-  if(
-    (cost.coins || 0) >
-    S.coins
-  ){
-
-    return false;
-
-  }
-
-
-  for(
-    const [id,n]
-    of Object.entries(
-      cost.ores || {}
-    )
-  ){
-
-    if(
-      getInv(id) <
-      n
-    ){
-
-      return false;
-
-    }
-
-  }
-
-
+  if(!cost)return false;
+  if(!hasCoins(cost.coins||0))return false;
+  for(const [id,n] of Object.entries(cost.ores||{}))if(getInv(id)<n)return false;
+  for(const [id,n] of Object.entries(cost.mats||{}))if(getMat(id)<n)return false;
   return true;
-
 }
-
-
 function pay(cost){
-
-  S.coins -=
-    cost.coins || 0;
-
-
-  for(
-    const [id,n]
-    of Object.entries(
-      cost.ores || {}
-    )
-  ){
-
-    S.inventory[id] =
-      getInv(id) - n;
-
-  }
-
+  spendCoins(cost.coins||0);
+  for(const [id,n] of Object.entries(cost.ores||{}))S.inventory[id]=getInv(id)-n;
+  for(const [id,n] of Object.entries(cost.mats||{}))S.materials[id]=getMat(id)-n;
 }
-
-
 function costHTML(cost){
-
-  if(!cost)
-    return '';
-
-
-  const parts = [];
-
-
-  if(cost.coins){
-
-    parts.push(
-      `<span class="${
-        S.coins >= cost.coins
-        ? 'ok'
-        : 'bad'
-      }">🪙 ${fmt(cost.coins)}</span>`
-    );
-
-  }
-
-
-  for(
-    const [id,n]
-    of Object.entries(
-      cost.ores || {}
-    )
-  ){
-
-    const ore =
-      oreMap[id];
-
-
-    parts.push(
-      `<span class="${
-        getInv(id) >= n
-        ? 'ok'
-        : 'bad'
-      }">${ore.icon} ${n} ${ore.name}</span>`
-    );
-
-  }
-
-
+  if(!cost)return'';const parts=[];
+  if(cost.coins)parts.push(`<span class="${hasCoins(cost.coins)?'ok':'bad'}">🪙 ${fmt(cost.coins)}</span>`);
+  for(const [id,n] of Object.entries(cost.ores||{})){const o=oreMap[id];parts.push(`<span class="${getInv(id)>=n?'ok':'bad'}">${o.icon} ${n} ${o.name}</span>`)}
+  for(const [id,n] of Object.entries(cost.mats||{})){const m=materials[id];parts.push(`<span class="${getMat(id)>=n?'ok':'bad'}">${m.icon} ${n} ${m.name}</span>`)}
   return parts.join(' • ');
-
 }
-
-
-/* ==========================================
-   DEPTHS
-========================================== */
 
 function unlockDepth(i){
-
-  if(
-    i !==
-    S.unlockedDepth + 1
-  ){
-
-    return toast(
-      'Unlock depths in order.'
-    );
-
-  }
-
-
-  const cost =
-    depths[i].cost;
-
-
-  if(!canAfford(cost)){
-
-    return toast(
-      'You need more materials.'
-    );
-
-  }
-
-
-  pay(cost);
-
-
-  S.unlockedDepth =
-    i;
-
-  S.depth =
-    i;
-
-  S.rockHp =
-    depths[i].rock;
-
-
-  toast(
-    `${depths[i].name} unlocked!`
-  );
-
-
-  save();
-
-  renderAll();
-
+  if(i!==S.unlockedDepth+1)return toast('Unlock depths in order.');
+  const cost=depths[i].cost;if(!canAfford(cost))return toast('You need more materials.');
+  const before=new Set(systemDefs.filter(x=>isSystemUnlocked(x.id)).map(x=>x.id));
+  pay(cost);S.unlockedDepth=i;S.depth=i;S.rockHp=depths[i].rock;
+  const newly=systemDefs.filter(x=>isSystemUnlocked(x.id)&&!before.has(x.id)).map(x=>`${x.icon} ${x.name}`);
+  toast(`${depths[i].name} unlocked!${newly.length?` New: ${newly.join(', ')}`:''}`);save();renderAll();
 }
-
-
-function selectDepth(i){
-
-  if(
-    i >
-    S.unlockedDepth
-  ){
-
-    return;
-
-  }
-
-
-  S.depth =
-    i;
-
-
-  S.rockHp =
-    depths[i].rock;
-
-
-  save();
-
-  renderAll();
-
-}
-
-
-/* ==========================================
-   PICKAXE UPGRADES
-========================================== */
-
+function selectDepth(i){if(i>S.unlockedDepth)return;S.depth=i;S.rockHp=depths[i].rock;save();renderAll()}
 function upgradePickaxe(){
-
-  if(
-    S.pickaxe >=
-    pickaxes.length - 1
-  ){
-
-    return;
-
-  }
-
-
-  const next =
-    pickaxes[
-      S.pickaxe + 1
-    ];
-
-
-  if(
-    !canAfford(
-      next.cost
-    )
-  ){
-
-    return toast(
-      'You need more materials.'
-    );
-
-  }
-
-
-  pay(next.cost);
-
-
-  S.pickaxe++;
-
-
-  toast(
-    `${next.name} forged!`
-  );
-
-
-  save();
-
-  renderAll();
-
+  if(S.pickaxe>=pickaxes.length-1)return;
+  const next=pickaxes[S.pickaxe+1];if(!canAfford(next.cost))return toast('You need more forge materials.');
+  const before=new Set(systemDefs.filter(x=>isSystemUnlocked(x.id)).map(x=>x.id));
+  pay(next.cost);S.pickaxe++;const newly=systemDefs.filter(x=>isSystemUnlocked(x.id)&&!before.has(x.id)).map(x=>`${x.icon} ${x.name}`);
+  toast(`${next.name} forged!${newly.length?` New: ${newly.join(', ')}`:''}`);save();renderAll();
 }
-
-
-/* ==========================================
-   SELLING
-========================================== */
-
-function sellOre(
-  id,
-  amount
-){
-
-  const have =
-    getInv(id);
-
-
-  amount =
-    Math.min(
-      have,
-      amount
-    );
-
-
-  if(amount <= 0)
-    return;
-
-
-  const ore =
-    oreMap[id];
-
-
-  const gain =
-    oreSellValue(ore) *
-    amount;
-
-
-  S.inventory[id] =
-    have - amount;
-
-
-  S.coins +=
-    gain;
-
-
-  toast(
-    `Sold ${amount} ${ore.name} ` +
-    `for ${fmt(gain)} coins`
-  );
-
-
-  save();
-
-  renderAll();
-
-  openOre(id);
-
+function oreSellValue(o){const mastery=getMasterLevel(getMastery(o.id));return Math.max(1,Math.floor(o.value*sellMultiplier()*(1+mastery*.025)))}
+function sellOre(id,amount){
+  const have=getInv(id);amount=Math.min(have,amount);if(amount<=0)return;
+  const o=oreMap[id],gain=oreSellValue(o)*amount;S.inventory[id]=have-amount;S.coins+=gain;toast(`Sold ${fmt(amount)} ${o.name} for ${fmt(gain)} coins`);save();renderAll();openOre(id);
 }
-
-
-function sellAll(id){
-
-  sellOre(
-    id,
-    getInv(id)
-  );
-
-}
-
-
-/* ==========================================
-   GEODES
-========================================== */
 
 function openGeode(type){
-
-  const geode =
-    geodes[type];
-
-
-  if(
-    (S.geodes[type] || 0)
-    <= 0
-  ){
-
-    return;
-
-  }
-
-
+  const g=geodes[type];if(!g||(S.geodes[type]||0)<=0)return;
   S.geodes[type]--;
-
-
-  const count =
-    geode.min +
-    Math.floor(
-      Math.random() *
-      (
-        geode.max -
-        geode.min +
-        1
-      )
-    );
-
-
-  const rewards = {};
-
-
-  for(
-    let i=0;
-    i<count;
-    i++
-  ){
-
-    const depth =
-      Math.min(
-        geode.depth,
-        S.unlockedDepth
-      );
-
-
-    const ore =
-      rollOreAtDepth(
-        depth,
-        geode.rare
-      );
-
-
-    addOre(
-      ore.id,
-      1,
-      {
-        silent:false
-      }
-    );
-
-
-    rewards[ore.id] =
-      (
-        rewards[ore.id] ||
-        0
-      ) + 1;
-
+  let multiplier=geodeContentMultiplier();
+  if(S.boosts.geodeBoosterCharges>0){multiplier*=1.5;S.boosts.geodeBoosterCharges--}
+  let count=Math.round((g.min+Math.floor(Math.random()*(g.max-g.min+1)))*multiplier);
+  count=Math.max(g.min,count);
+  const rewards={},newIds=new Set(),variantCollector=[];
+  const depth=Math.min(g.depth,S.unlockedDepth);
+  const rareSlots=Math.min(count,g.guaranteed);
+  for(let i=0;i<count;i++){
+    const o=i<rareSlots?rollRareOre(depth,g.rare):rollOreAtDepth(depth,{rareBoost:g.rare});
+    if(getLife(o.id)===0)newIds.add(o.id);
+    rewards[o.id]=(rewards[o.id]||0)+1;
   }
-
-
-  save();
-
-  renderAll();
-
-  showGeodeResults(
-    geode,
-    rewards
-  );
-
+  for(const [id,n] of Object.entries(rewards))addOre(id,n,{silent:true,variantCollector});
+  save();renderAll();showGeodeResults(g,rewards,newIds,variantCollector);
 }
-
-
-function buyGeode(type){
-
-  const geode =
-    geodes[type];
-
-
-  if(
-    S.coins <
-    geode.buy
-  ){
-
-    return toast(
-      'Not enough coins.'
-    );
-
-  }
-
-
-  S.coins -=
-    geode.buy;
-
-
-  S.geodes[type] =
-    (
-      S.geodes[type] ||
-      0
-    ) + 1;
-
-
-  toast(
-    `${geode.name} purchased`
-  );
-
-
-  save();
-
-  renderAll();
-
+function buyGeode(type){const g=geodes[type];if(!g)return;if(!hasCoins(g.buy))return toast('Not enough coins.');spendCoins(g.buy);S.geodes[type]=(S.geodes[type]||0)+1;toast(`${g.name} purchased`);save();renderAll()}
+function buyGeodeBooster(){const price=1800;if(!hasCoins(price))return toast('Not enough coins.');spendCoins(price);S.boosts.geodeBoosterCharges+=3;toast('Next 3 geodes contain 50% more ore.');save();renderAll()}
+function buyBoost(id){
+  const b=shopBoosts[id];if(!b)return;if(b.requiresProspector&&!S.prospectorTarget)return toast('Choose a Prospector target first.');
+  if(!hasCoins(b.price))return toast('Not enough coins.');spendCoins(b.price);S.boosts[id]=Math.max(now(),S.boosts[id]||0)+b.duration;toast(`${b.name} activated`);save();renderAll();
 }
-
-
-/* ==========================================
-   ENCHANTMENTS
-========================================== */
-
-function rollEnchant(
-  slotIndex
-){
-
-  const slot =
-    S.enchSlots[
-      slotIndex
-    ];
-
-
-  if(!slot.unlocked)
-    return;
-
-
-  const cost =
-    slot.ench
-    ? 250 *
-      (slotIndex + 1)
-    : 0;
-
-
-  if(
-    S.coins <
-    cost
-  ){
-
-    return toast(
-      'Not enough coins.'
-    );
-
-  }
-
-
-  S.coins -=
-    cost;
-
-
-  const enchant =
-    pick(enchants);
-
-
-  const maxLevel =
-    1 +
-    Math.floor(
-      S.pickaxe / 3
-    );
-
-
-  slot.ench = {
-
-    id:enchant.id,
-
-    level:
-      1 +
-      Math.floor(
-        Math.random() *
-        maxLevel
-      )
-
-  };
-
-
-  save();
-
-  renderAll();
-
-
-  toast(
-    `${enchant.name} rolled!`
-  );
-
-}
-
-
-function unlockEnchantSlot(i){
-
-  const requirement =
-    i === 1
-    ? {
-        level:3,
-        coins:750
-      }
-    : {
-        level:6,
-        coins:3000
-      };
-
-
-  if(
-    S.pickaxe <
-    requirement.level
-  ){
-
-    return toast(
-      `Requires pickaxe level ${
-        requirement.level + 1
-      }.`
-    );
-
-  }
-
-
-  if(
-    S.coins <
-    requirement.coins
-  ){
-
-    return toast(
-      'Not enough coins.'
-    );
-
-  }
-
-
-  S.coins -=
-    requirement.coins;
-
-
-  S.enchSlots[i].unlocked =
-    true;
-
-
-  S.enchSlots[i].ench =
-    null;
-
-
-  save();
-
-  renderAll();
-
-
-  toast(
-    `Enchantment slot ${
-      i+1
-    } unlocked!`
-  );
-
-}
-
-
-/* ==========================================
-   COIN SHOP
-========================================== */
-
-function buyRush(){
-
-  if(
-    S.coins <
-    500
-  ){
-
-    return toast(
-      'Not enough coins.'
-    );
-
-  }
-
-
-  S.coins -=
-    500;
-
-
-  S.rushUntil =
-    Date.now() +
-    30000;
-
-
-  save();
-
-  renderAll();
-
-
-  toast(
-    'Miner’s Rush active for 30 seconds!'
-  );
-
-}
-
-
-function buySkin(id){
-
-  const skin =
-    skins[id];
-
-
-  if(
-    S.skinsOwned[id]
-  ){
-
-    S.skin =
-      id;
-
-
-    save();
-
-    renderAll();
-
-
-    return toast(
-      `${skin.name} equipped`
-    );
-
-  }
-
-
-  if(
-    S.coins <
-    skin.price
-  ){
-
-    return toast(
-      'Not enough coins.'
-    );
-
-  }
-
-
-  S.coins -=
-    skin.price;
-
-
-  S.skinsOwned[id] =
-    true;
-
-
-  S.skin =
-    id;
-
-
-  save();
-
-  renderAll();
-
-
-  toast(
-    `${skin.name} purchased + equipped`
-  );
-
-}
-
-
-/* ==========================================
-   SETS
-========================================== */
+function buybackPrice(id){const o=oreMap[id];return o?Math.max(900,Math.floor(900+o.value*100)):999999}
+function buySupplyBuyback(){const sel=document.getElementById('buybackOre');if(!sel)return;const id=sel.value,o=oreMap[id];if(!o||o.rank>14||getLife(id)<=0)return;const price=buybackPrice(id);if(!hasCoins(price))return toast('Not enough coins.');spendCoins(price);addOre(id,25,{silent:true,noVariant:true});toast(`Supply crate: +25 ${o.name}`);save();renderAll()}
+function buySkin(id){const skin=skins[id];if(!skin)return;if(S.skinsOwned[id]){S.skin=id;toast(`${skin.name} equipped`);save();renderAll();return}if(!hasCoins(skin.price))return toast('Not enough coins.');spendCoins(skin.price);S.skinsOwned[id]=true;S.skin=id;toast(`${skin.name} purchased + equipped`);save();renderAll()}
 
 function claimSet(id){
-
-  const set =
-    sets.find(
-      s => s.id === id
-    );
-
-
-  if(
-    !set ||
-    S.setClaims[id]
-  ){
-
-    return;
-
-  }
-
-
-  const complete =
-    set.ores.every(
-      oreId =>
-        getLife(oreId) > 0
-    );
-
-
-  if(!complete){
-
-    return toast(
-      'Complete the set first.'
-    );
-
-  }
-
-
-  S.setClaims[id] =
-    true;
-
-
-  S.coins +=
-    set.reward;
-
-
-  const eligible =
-    Object.keys(
-      geodes
-    ).filter(
-      key =>
-        geodes[key].depth <=
-        S.unlockedDepth
-    );
-
-
-  const type =
-    eligible[
-      eligible.length - 1
-    ] || 'common';
-
-
-  S.geodes[type] =
-    (
-      S.geodes[type] ||
-      0
-    ) + 1;
-
-
-  toast(
-    `Set complete! +${fmt(set.reward)} coins + 1 geode`
-  );
-
-
-  save();
-
-  renderAll();
-
+  const set=sets.find(s=>s.id===id);if(!set||S.setClaims[id])return;
+  if(!set.ores.every(x=>getLife(x)>0))return toast('Complete the set first.');
+  S.setClaims[id]=true;S.coins+=set.reward;
+  const eligible=Object.keys(geodes).filter(k=>geodes[k].depth<=S.unlockedDepth);const type=eligible[eligible.length-1]||'common';S.geodes[type]=(S.geodes[type]||0)+1;
+  toast(`Set complete! +${fmt(set.reward)} coins + 1 geode`);save();renderAll();
 }
 
+function meetsDepth(n){return S.dev.systemsAll||S.unlockedDepth>=n}
+function isSystemUnlocked(id){const def=systemDefs.find(x=>x.id===id);if(!def)return false;if(id==='prospector')return S.dev.systemsAll||S.pickaxe>=1||S.unlockedDepth>=1;return meetsDepth(def.unlock)}
+function setSystem(id){if(!isSystemUnlocked(id))return toast(`${systemDefs.find(x=>x.id===id)?.req||'More progress'} required.`);S.activeSystem=id;save();renderSystems()}
 
-/* ==========================================
-   RENDER
-========================================== */
+function setProspector(){
+  const sel=document.getElementById('prospectorSelect');if(!sel)return;
+  const id=sel.value||null;if(id&&!oreMap[id])return;S.prospectorTarget=id;toast(id?`${oreMap[id].name} targeted`:'Prospector target cleared');save();renderAll();
+}
+function clearProspector(){S.prospectorTarget=null;save();renderAll();toast('Prospector target cleared')}
 
-function renderAll(
-  full=true
-){
-
-  renderTop();
-
-  renderMine();
-
-
-  if(
-    full ||
-    document
-      .getElementById(
-        'collectionView'
-      )
-      .classList
-      .contains('active')
-  ){
-
-    renderCollection();
-
-  }
-
-
-  renderGeodes();
-
-  renderForge();
-
-  renderEnchants();
-
+function workshopCost(def,level){return Math.floor(def.base*Math.pow(1.62,level))}
+function buyWorkshop(id){
+  const def=workshopDefs.find(x=>x.id===id);if(!def||!meetsDepth(def.unlock))return;
+  const level=workshopLevel(id);if(level>=def.cap)return;
+  const cost=workshopCost(def,level);if(!hasCoins(cost))return toast('Not enough coins.');spendCoins(cost);S.workshop[id]=level+1;toast(`${def.name} upgraded to ${level+1}`);save();renderAll();
 }
 
+function maxCraftable(recipe){
+  let max=Infinity;for(const [id,n] of Object.entries(recipe.ores))max=Math.min(max,Math.floor(getInv(id)/n));return Number.isFinite(max)?max:0;
+}
+function craftRefined(id,amount){
+  const r=refineryRecipes.find(x=>x.id===id);if(!r||!meetsDepth(r.unlock))return;
+  const max=maxCraftable(r);const count=amount==='max'?max:Math.min(max,Number(amount)||1);if(count<=0)return toast('Not enough raw ore.');
+  for(const [oreId,n] of Object.entries(r.ores))S.inventory[oreId]=getInv(oreId)-n*count;
+  S.materials[id]=getMat(id)+count;toast(`Crafted ${count} ${r.name}`);save();renderAll();
+}
+
+function enchantCost(id,nextLevel){
+  const base=enchantMap[id].cost(nextLevel);
+  if(nextLevel===1&&S.life>0&&S.enchantBlueprints[id]){
+    const discounted={coins:Math.ceil((base.coins||0)*.5),ores:{},mats:{}};
+    for(const [k,v] of Object.entries(base.ores||{}))discounted.ores[k]=Math.max(1,Math.ceil(v*.5));
+    for(const [k,v] of Object.entries(base.mats||{}))discounted.mats[k]=Math.max(1,Math.ceil(v*.5));
+    return discounted;
+  }
+  return base;
+}
+function craftEnchant(id){
+  const def=enchantMap[id];if(!def||!meetsDepth(def.unlock))return;
+  const current=Number(S.enchantBook[id]||0);if(current>=5)return toast('Enchantment already max level.');
+  const next=current+1,cost=enchantCost(id,next);if(!canAfford(cost))return toast('You need more enchantment materials.');
+  pay(cost);S.enchantBook[id]=next;S.enchantBlueprints[id]=true;toast(`${def.name} ${next} crafted`);save();renderAll();
+}
+function showEquipEnchant(id){
+  if(!S.enchantBook[id])return;
+  const slots=availableEnchantSlots();
+  showSheet(`<button class="close" data-close>✕</button><div class="eyebrow">Equip enchantment</div><h2>${enchantMap[id].icon} ${enchantMap[id].name} ${S.enchantBook[id]}</h2><div class="sub">Choose a pickaxe socket. Equipping the same enchantment elsewhere moves it.</div><div class="stack" style="margin-top:14px">${Array.from({length:slots},(_,i)=>{const cur=S.equippedEnchants[i];return `<button class="btn ${cur?'secondary':''}" data-equip-enchant="${id}:${i}">Socket ${i+1} • ${cur?`${enchantMap[cur]?.icon||'✨'} ${enchantMap[cur]?.name||cur}`:'Empty'}</button>`}).join('')}<button class="btn secondary" data-unequip-enchant="${id}">Unequip ${enchantMap[id].name}</button></div>`);
+}
+function equipEnchant(id,slot){
+  if(!S.enchantBook[id])return;const max=availableEnchantSlots();if(slot<0||slot>=max)return;
+  S.equippedEnchants=S.equippedEnchants.map(x=>x===id?null:x);S.equippedEnchants[slot]=id;save();closeSheet();renderAll();toast(`${enchantMap[id].name} equipped`);
+}
+function unequipEnchant(id){S.equippedEnchants=S.equippedEnchants.map(x=>x===id?null:x);save();closeSheet();renderAll();toast(`${enchantMap[id].name} unequipped`)}
+
+const expeditionDurations=[
+  {label:'15 minutes',mins:15,cost:150},{label:'1 hour',mins:60,cost:450},{label:'4 hours',mins:240,cost:1200},{label:'8 hours',mins:480,cost:2200}
+];
+function startExpedition(slot){
+  if(!isSystemUnlocked('expeditions')||slot>=S.expeditionSlots||S.expeditions[slot])return;
+  const dSel=document.getElementById(`expDepth_${slot}`),tSel=document.getElementById(`expDur_${slot}`);if(!dSel||!tSel)return;
+  const depth=clamp(Number(dSel.value)||0,0,S.unlockedDepth),mins=Number(tSel.value)||15;const dur=expeditionDurations.find(x=>x.mins===mins)||expeditionDurations[0];
+  S.expeditionDrafts[slot]={depth,mins};
+  if(!hasCoins(dur.cost))return toast('Not enough coins for supplies.');spendCoins(dur.cost);
+  S.expeditions[slot]={depth,mins,start:now(),end:now()+mins*60000,target:S.prospectorTarget||null};toast(`Expedition sent to ${depths[depth].name}`);save();renderAll();
+}
+function materialForDepth(d){if(d>=7)return'corealloy';if(d>=6)return'voidmatter';if(d>=4)return'magmaalloy';if(d>=3)return'gemessence';if(d>=2)return'crystaldust';return'refinedmetal'}
+function collectExpedition(slot){
+  const e=S.expeditions[slot];if(!e||now()<e.end)return;
+  const units=Math.max(8,Math.floor(e.mins*(.8+e.depth*.18)*expeditionMultiplier()*(.88+Math.random()*.24)));
+  const rewards={},newIds=new Set(),variantCollector=[];
+  for(let i=0;i<units;i++){
+    const o=rollOreAtDepth(e.depth,{target:e.target,targetStrength:.5});if(getLife(o.id)===0)newIds.add(o.id);rewards[o.id]=(rewards[o.id]||0)+1;
+  }
+  for(const [id,n] of Object.entries(rewards))addOre(id,n,{silent:true,variantCollector});
+  let geodeCount=Math.floor(units/180);if(Math.random()<(units%180)/180)geodeCount++;
+  const geoType=geodeTypeForDepth(e.depth);if(geodeCount>0)S.geodes[geoType]=(S.geodes[geoType]||0)+geodeCount;
+  let matReward=0;const matId=materialForDepth(e.depth);if(Math.random()<Math.min(.85,.18+e.mins/600))matReward=1+Math.floor(e.mins/240);if(matReward)S.materials[matId]=getMat(matId)+matReward;
+  S.expeditions[slot]=null;save();renderAll();showExpeditionResults(e,rewards,newIds,variantCollector,geoType,geodeCount,matId,matReward);
+}
+function unlockExpeditionSlot(){
+  if(S.expeditionSlots>=3)return;const next=S.expeditionSlots+1;const req=next===2?5:6;const price=next===2?15000:50000;
+  if(S.unlockedDepth<req)return toast(`Requires ${depths[req].name}.`);if(!hasCoins(price))return toast('Not enough coins.');spendCoins(price);S.expeditionSlots++;S.expeditions.push(null);S.expeditionDrafts.push({depth:S.unlockedDepth,mins:15});toast(`Expedition team ${next} unlocked`);save();renderAll();
+}
+
+function marketCycle(){return Math.floor(now()/(4*60*60*1000))}
+function seeded(seed){let t=seed>>>0;return()=>{t+=0x6D2B79F5;let x=t;x=Math.imul(x^x>>>15,x|1);x^=x+Math.imul(x^x>>>7,x|61);return((x^x>>>14)>>>0)/4294967296}}
+function ensureMarketCycle(){const c=marketCycle();if(S.marketRefreshCycle!==c){S.marketRefreshCycle=c;S.marketRefreshCount=0;S.marketSalt=0}}
+function availableGeodeTypes(){return Object.keys(geodes).filter(k=>geodes[k].depth<=S.unlockedDepth)}
+function generateMarketOffers(){
+  ensureMarketCycle();const cycle=marketCycle(),rnd=seeded(cycle*9973+S.marketSalt*7919+17);
+  const tradePool=[
+    {ore:'iron',amount:250,mat:'refinedmetal',reward:5},{ore:'quartz',amount:220,mat:'crystaldust',reward:5},{ore:'obsidian',amount:160,mat:'magmaalloy',reward:3},
+    {ore:'ruby',amount:70,mat:'gemessence',reward:3},{ore:'nightstone',amount:90,mat:'voidmatter',reward:3},{ore:'corecrystal',amount:45,mat:'corealloy',reward:2}
+  ].filter(x=>oreMap[x.ore].min<=S.unlockedDepth);
+  const trade=tradePool[Math.floor(rnd()*tradePool.length)]||tradePool[0];
+  const geos=availableGeodeTypes(),gType=geos[Math.floor(rnd()*geos.length)]||'common';
+  const matKeys=Object.keys(materials).filter(k=>refineryRecipes.find(r=>r.id===k)?.unlock<=S.unlockedDepth);const mat=matKeys[Math.floor(rnd()*matKeys.length)]||'refinedmetal';
+  const enchAvail=enchantDefs.filter(e=>e.unlock<=S.unlockedDepth);const ench=enchAvail[Math.floor(rnd()*enchAvail.length)]||enchantDefs[0];
+  return [
+    {kind:'trade',title:`Bulk ${oreMap[trade.ore].name} Contract`,desc:`Trade ${trade.amount} ${oreMap[trade.ore].name} for ${trade.reward} ${materials[trade.mat].name}.`,cost:{ores:{[trade.ore]:trade.amount}},reward:{mat:trade.mat,amount:trade.reward}},
+    {kind:'geode',title:`Discount ${geodes[gType].name}`,desc:'One geode at a Deep Market discount.',cost:{coins:Math.floor(geodes[gType].buy*.72)},reward:{geode:gType,amount:1}},
+    {kind:'material',title:`${materials[mat].name} Crate`,desc:`Buy 3 ${materials[mat].name} directly.`,cost:{coins:Math.max(1400,Math.floor((refineryRecipes.findIndex(r=>r.id===mat)+1)*2200))},reward:{mat,amount:3}},
+    {kind:'enchant',title:`${ench.icon} ${ench.name} Cache`,desc:`Instantly gain one level of ${ench.name}, up to level 5.`,cost:{coins:3500+ench.unlock*1800},reward:{enchant:ench.id,amount:1}}
+  ];
+}
+function buyMarket(index){
+  ensureMarketCycle();const offers=generateMarketOffers(),offer=offers[index];if(!offer)return;const key=`${marketCycle()}:${S.marketSalt}:${index}`;if(S.marketBought[key])return toast('Offer already purchased.');
+  if(!canAfford(offer.cost))return toast('You cannot afford this offer.');if(offer.reward.enchant&&(S.enchantBook[offer.reward.enchant]||0)>=5)return toast('That enchantment is already max level.');
+  pay(offer.cost);if(offer.reward.mat)S.materials[offer.reward.mat]=getMat(offer.reward.mat)+offer.reward.amount;if(offer.reward.geode)S.geodes[offer.reward.geode]=(S.geodes[offer.reward.geode]||0)+offer.reward.amount;if(offer.reward.enchant){const id=offer.reward.enchant;S.enchantBook[id]=Math.min(5,(S.enchantBook[id]||0)+1);S.enchantBlueprints[id]=true}
+  S.marketBought[key]=true;toast('Deep Market deal completed');save();renderAll();
+}
+function refreshMarket(){ensureMarketCycle();const price=2500+S.marketRefreshCount*1500;if(!hasCoins(price))return toast('Not enough coins.');spendCoins(price);S.marketRefreshCount++;S.marketSalt++;toast('Deep Market refreshed');save();renderAll()}
+
+function coreShardCost(){return {coins:50000,ores:{eternite:3,genesis:1,godstone:6},mats:{corealloy:4}}}
+function craftCoreShard(){const cost=coreShardCost();if(!canAfford(cost))return toast('You need more core materials.');pay(cost);S.coreShards++;toast('Core Shard forged!');save();renderAll()}
+function buyCoreUpgrade(id){const def=coreUpgradeDefs.find(x=>x.id===id);if(!def)return;const lvl=coreLevel(id),cost=lvl+1;if(S.coreShards<cost)return toast(`Requires ${cost} Core Shard${cost===1?'':'s'}.`);S.coreShards-=cost;S.coreUpgrades[id]=lvl+1;toast(`${def.name} upgraded`);save();renderAll()}
+function rebirth(){
+  if(S.coreShards<1)return toast('Forge at least one Core Shard first.');
+  if(!confirm('Begin a new Life? Depths, pickaxe, coins, current ores, refined materials, Workshop upgrades, geodes and active expeditions reset. Collection history, variants, sets, cosmetics, blueprints, Core upgrades and remaining Core Shards stay.'))return;
+  const keep={lifetime:{...S.lifetime},masteryXP:{...S.masteryXP},variants:JSON.parse(JSON.stringify(S.variants)),setClaims:{...S.setClaims},skinsOwned:{...S.skinsOwned},skin:S.skin,life:S.life+1,coreShards:S.coreShards-1,coreUpgrades:{...S.coreUpgrades},enchantBlueprints:{...S.enchantBlueprints},dev:{...S.dev}};
+  const n=fresh();Object.assign(n,keep);n.coins=(keep.coreUpgrades.startCoins||0)*500;n.version=VERSION;S=n;save();renderAll();switchView('mine');toast(`Life ${S.life+1} begins. Permanent bonuses are active.`);
+}
 
 function renderTop(){
-
-  document.getElementById(
-    'coinTop'
-  ).textContent =
-    fmt(S.coins);
-
+  document.getElementById('coinTop').textContent=S.dev.infiniteCoins?'∞':fmt(S.coins);
+  document.getElementById('devBadge').classList.toggle('show',!!S.dev.used);
 }
-
-
-/* ==========================================
-   MINE RENDER
-========================================== */
+function renderAll(full=true){renderTop();renderMine();renderGeodes();renderForge();if(full||document.getElementById('collectionView').classList.contains('active'))renderCollection();if(full||document.getElementById('systemsView').classList.contains('active'))renderSystems()}
 
 function renderMine(){
-
-  const depth =
-    depths[S.depth];
-
-
-  const hero =
-    document.getElementById(
-      'mineHero'
-    );
-
-
-  hero.style.setProperty(
-    '--depthA',
-    depth.a
-  );
-
-
-  hero.style.setProperty(
-    '--depthB',
-    depth.b
-  );
-
-
-  document.getElementById(
-    'depthTitle'
-  ).textContent =
-    depth.name;
-
-
-  const possible =
-    ores.filter(
-      o =>
-        o.min <= S.depth &&
-        o.max >= S.depth
-    ).length;
-
-
-  document.getElementById(
-    'depthStats'
-  ).innerHTML =
-    `Depth ${S.depth+1}/8<br>` +
-    `${possible} possible ores`;
-
-
-  document.getElementById(
-    'rockHpBar'
-  ).style.width =
-    `${
-      clamp(
-        S.rockHp /
-        depth.rock *
-        100,
-        0,
-        100
-      )
-    }%`;
-
-
-  document.getElementById(
-    'hitHint'
-  ).textContent =
-    `${pickaxes[S.pickaxe].name} • ` +
-    `${pickPower()} damage` +
-    (
-      Date.now() <
-      S.rushUntil
-      ? ' • 2× RUSH'
-      : ''
-    );
-
-
-  const btn =
-    document.getElementById(
-      'rockBtn'
-    );
-
-
-  btn.className =
-    `rockBtn ${skins[S.skin].cls}`;
-
-
-  document.getElementById(
-    'statPower'
-  ).textContent =
-    pickPower();
-
-
-  document.getElementById(
-    'statFound'
-  ).textContent =
-    `${
-      ores.filter(
-        o =>
-          getLife(o.id) >
-          0
-      ).length
-    }/50`;
-
-
-  document.getElementById(
-    'statGeode'
-  ).textContent =
-    `${
-      (
-        geodeChance() *
-        100
-      ).toFixed(1)
-    }%`;
-
-
-  document.getElementById(
-    'depthStrip'
-  ).innerHTML =
-
-    depths
-      .map(
-        (d,i) => {
-
-          const locked =
-            i >
-            S.unlockedDepth;
-
-
-          const active =
-            i ===
-            S.depth;
-
-
-          const affordable =
-            i ===
-            S.unlockedDepth + 1 &&
-            canAfford(d.cost);
-
-
-          return `
-          <div class="
-            depthChip
-            ${active?'active':''}
-            ${locked?'locked':''}
-          ">
-
-            <b>
-              ${locked?'🔒 ':''}
-              ${i+1}. ${d.name}
-            </b>
-
-            <small>
-              ${
-                locked
-                ? (
-                    i ===
-                    S.unlockedDepth + 1
-                    ? costHTML(d.cost)
-                    : 'Unlock previous depth first'
-                  )
-                : (
-                    active
-                    ? 'Mining here'
-                    : 'Tap to travel'
-                  )
-              }
-            </small>
-
-            ${
-              locked &&
-              i ===
-              S.unlockedDepth + 1
-              ? `
-                <button
-                  class="
-                    unlockBtn
-                    ${affordable?'can':''}
-                  "
-                  data-unlock="${i}"
-                >
-                  Unlock
-                </button>
-              `
-              : `
-                <button
-                  class="unlockBtn"
-                  data-depth="${i}"
-                >
-                  ${
-                    active
-                    ? 'Current'
-                    : 'Travel'
-                  }
-                </button>
-              `
-            }
-
-          </div>
-          `;
-
-        }
-      )
-      .join('');
-
+  const d=depths[S.depth],hero=document.getElementById('mineHero');hero.style.setProperty('--depthA',d.a);hero.style.setProperty('--depthB',d.b);
+  document.getElementById('depthTitle').textContent=d.name;
+  const possible=ores.filter(o=>o.min<=S.depth&&o.max>=S.depth).length;
+  const revisit=revisitSteps();
+  document.getElementById('depthStats').innerHTML=`Depth ${S.depth+1}/8<br>${possible} possible ores${revisit?`<br>Revisit +${Math.round(revisitPowerBonus()*100)}% power`:''}`;
+  document.getElementById('rockHpBar').style.width=`${clamp(S.rockHp/d.rock*100,0,100)}%`;
+  document.getElementById('hitHint').textContent=`${pickaxes[S.pickaxe].name} • ${pickPower()} damage${revisit?` • +${Math.round(revisitMultiBonus()*100)}% revisit multi`:''}`;
+  document.getElementById('rockBtn').className=`rockBtn ${skins[S.skin].cls}`;
+  document.getElementById('statPower').textContent=pickPower();
+  document.getElementById('statFound').textContent=`${ores.filter(o=>getLife(o.id)>0).length}/50`;
+  document.getElementById('statGeode').textContent=`${(geodeChance()*100).toFixed(1)}%`;
+  const active=[];for(const [id,b] of Object.entries(shopBoosts))if(boostActive(id))active.push(`${b.icon} ${b.name} ${formatTime(S.boosts[id]-now())}`);if(S.boosts.geodeBoosterCharges>0)active.push(`📦 Geode Booster ×${S.boosts.geodeBoosterCharges}`);if(S.prospectorTarget)active.push(`🧭 ${oreMap[S.prospectorTarget].name} target`);document.getElementById('boostStrip').innerHTML=active.length?active.map(x=>`<div class="boostChip">${x}</div>`).join(''):'<div class="boostChip">No active boosts</div>';
+  document.getElementById('depthStrip').innerHTML=depths.map((x,i)=>{
+    const locked=i>S.unlockedDepth,activeDepth=i===S.depth,affordable=i===S.unlockedDepth+1&&canAfford(x.cost);
+    return `<div class="depthChip ${activeDepth?'active':''} ${locked?'locked':''}"><b>${locked?'🔒 ':''}${i+1}. ${x.name}</b><small>${locked?(i===S.unlockedDepth+1?costHTML(x.cost):'Unlock previous depth first'):(activeDepth?'Mining here':i<S.unlockedDepth?'Revisit: faster mining, same ore table':'Tap to travel')}</small>${locked&&i===S.unlockedDepth+1?`<button class="unlockBtn ${affordable?'can':''}" data-unlock="${i}">Unlock</button>`:`<button class="unlockBtn" data-depth="${i}">${activeDepth?'Current':'Travel'}</button>`}</div>`;
+  }).join('');
 }
-
-
-/* ==========================================
-   COLLECTION RENDER
-========================================== */
 
 function renderCollection(){
-
-  const discovered =
-    ores.filter(
-      o =>
-        getLife(o.id) >
-        0
-    ).length;
-
-
-  document.getElementById(
-    'collectionProgress'
-  ).textContent =
-    `${discovered} of 50 discovered`;
-
-
-  const filters = [
-
-    ['all','All'],
-
-    ...depths.map(
-      (d,i) =>
-        [
-          `d${i}`,
-          `${i+1}. ${d.name}`
-        ]
-    )
-
-  ];
-
-
-  document.getElementById(
-    'collectionFilters'
-  ).innerHTML =
-
-    filters.map(
-      f => `
-        <button
-          class="
-            filter
-            ${
-              filter===f[0]
-              ? 'active'
-              : ''
-            }
-          "
-          data-filter="${f[0]}"
-        >
-          ${f[1]}
-        </button>
-      `
-    ).join('');
-
-
-  let list =
-    ores;
-
-
-  if(
-    filter.startsWith('d')
-  ){
-
-    const depth =
-      +filter.slice(1);
-
-
-    list =
-      ores.filter(
-        o =>
-          o.min <= depth &&
-          o.max >= depth
-      );
-
-  }
-
-
-  document.getElementById(
-    'oreGrid'
-  ).innerHTML =
-
-    list.map(
-      o => {
-
-        const life =
-          getLife(o.id);
-
-        const inv =
-          getInv(o.id);
-
-        const level =
-          getMasterLevel(
-            life
-          );
-
-        const next =
-          nextMilestone(
-            life
-          );
-
-        const previous =
-          level
-          ? milestones[level-1]
-          : 0;
-
-
-        const progress =
-          next
-          ? clamp(
-              (
-                life -
-                previous
-              ) /
-              (
-                next -
-                previous
-              ) *
-              100,
-              0,
-              100
-            )
-          : 100;
-
-
-        const foundVariants =
-          S.variants[o.id] ||
-          {};
-
-
-        return `
-        <button
-          class="
-            oreCard
-            card
-            ${life?'':'unknown'}
-          "
-          data-ore="${o.id}"
-          style="
-            text-align:left;
-            color:inherit;
-            border:1px solid var(--line)
-          "
-        >
-
-          <div class="countBadge">
-            ×${fmt(inv)}
-          </div>
-
-          <div class="oreIcon">
-            ${life ? o.icon : '❔'}
-          </div>
-
-          <div class="oreName">
-            ${
-              life
-              ? o.name
-              : 'Undiscovered'
-            }
-          </div>
-
-          <div class="oreMeta">
-            ${
-              life
-              ? `Lifetime ${fmt(life)} • Mastery ${level}`
-              : `Rank #${o.rank}`
-            }
-          </div>
-
-          <div class="masterBar">
-            <i
-              style="
-                width:${
-                  life
-                  ? progress
-                  : 0
-                }%
-              "
-            ></i>
-          </div>
-
-          <div class="variantDots">
-
-            ${
-              variants.map(
-                v => `
-                  <i
-                    class="${
-                      foundVariants[v]
-                      ? 'on'
-                      : ''
-                    }"
-                  ></i>
-                `
-              ).join('')
-            }
-
-          </div>
-
-        </button>
-        `;
-
-      }
-    ).join('');
-
-
-  document.getElementById(
-    'setList'
-  ).innerHTML =
-
-    sets.map(
-      set => {
-
-        const found =
-          set.ores.filter(
-            id =>
-              getLife(id) >
-              0
-          ).length;
-
-
-        const complete =
-          found ===
-          set.ores.length;
-
-
-        const claimed =
-          !!S.setClaims[
-            set.id
-          ];
-
-
-        return `
-        <div class="setCard card">
-
-          <div class="row">
-
-            <div>
-
-              <div class="eyebrow">
-                ${set.icon} Set
-              </div>
-
-              <h3>${set.name}</h3>
-
-              <div class="sub">
-                ${found}/${set.ores.length}
-                discovered •
-                Reward:
-                ${fmt(set.reward)}
-                coins + geode
-              </div>
-
-            </div>
-
-            <button
-              class="
-                btn
-                ${
-                  claimed
-                  ? 'secondary'
-                  : ''
-                }
-              "
-              data-set="${set.id}"
-              ${
-                !complete ||
-                claimed
-                ? 'disabled'
-                : ''
-              }
-            >
-              ${
-                claimed
-                ? 'Claimed'
-                : complete
-                  ? 'Claim'
-                  : 'Incomplete'
-              }
-            </button>
-
-          </div>
-
-        </div>
-        `;
-
-      }
-    ).join('');
-
+  const discovered=ores.filter(o=>getLife(o.id)>0).length;document.getElementById('collectionProgress').textContent=`${discovered} of 50 discovered`;
+  const filters=[['all','All'],...depths.map((d,i)=>[`d${i}`,`${i+1}. ${d.name}`])];
+  document.getElementById('collectionFilters').innerHTML=filters.map(f=>`<button class="filter ${collectionFilter===f[0]?'active':''}" data-filter="${f[0]}">${f[1]}</button>`).join('');
+  let list=ores;if(collectionFilter.startsWith('d')){const depth=+collectionFilter.slice(1);list=ores.filter(o=>o.min<=depth&&o.max>=depth)}
+  document.getElementById('oreGrid').innerHTML=list.map(o=>{
+    const life=getLife(o.id),inv=getInv(o.id),xp=getMastery(o.id),level=getMasterLevel(xp),next=nextMilestone(xp),prev=level?milestones[level-1]:0,progress=next?clamp((xp-prev)/(next-prev)*100,0,100):100,foundVariants=S.variants[o.id]||{};
+    return `<button class="oreCard card ${life?'':'unknown'}" data-ore="${o.id}" style="text-align:left;color:inherit;border:1px solid var(--line)"><div class="countBadge">×${fmt(inv)}</div><div class="oreIcon">${life?o.icon:'❔'}</div><div class="oreName">${life?o.name:'Undiscovered'}</div><div class="oreMeta">${life?`Lifetime ${fmt(life)} • Mastery ${level}`:`Rank #${o.rank}`}</div><div class="masterBar"><i style="width:${life?progress:0}%"></i></div><div class="variantDots">${variants.map(v=>`<i class="${foundVariants[v]?'on':''}"></i>`).join('')}</div></button>`;
+  }).join('');
+  document.getElementById('setList').innerHTML=sets.map(set=>{const found=set.ores.filter(id=>getLife(id)>0).length,complete=found===set.ores.length,claimed=!!S.setClaims[set.id];return `<div class="setCard card"><div class="row"><div><div class="eyebrow">${set.icon} Set</div><h3>${set.name}</h3><div class="sub">${found}/${set.ores.length} discovered • ${fmt(set.reward)} coins + geode</div></div><button class="btn ${claimed?'secondary':''}" data-set="${set.id}" ${!complete||claimed?'disabled':''}>${claimed?'Claimed':complete?'Claim':'Incomplete'}</button></div></div>`}).join('');
 }
-
-
-/* ==========================================
-   GEODES RENDER
-========================================== */
 
 function renderGeodes(){
-
-  document.getElementById(
-    'geodeGrid'
-  ).innerHTML =
-
-    Object.entries(
-      geodes
-    ).map(
-      ([id,g]) => `
-
-      <div class="geoCard card">
-
-        <div class="geoEmoji">
-          ${g.icon}
-        </div>
-
-        <h3>
-          ${g.name}
-        </h3>
-
-        <div class="sub">
-          ${g.min}–${g.max}
-          ore drops
-          <br>
-          Owned:
-          <b>
-            ${S.geodes[id] || 0}
-          </b>
-        </div>
-
-        <button
-          class="btn gold"
-          data-open-geode="${id}"
-          ${
-            (S.geodes[id] || 0)
-            <= 0
-            ? 'disabled'
-            : ''
-          }
-        >
-          Open
-        </button>
-
-      </div>
-
-      `
-    ).join('');
-
+  document.getElementById('geodeGrid').innerHTML=Object.entries(geodes).map(([id,g])=>{
+    const unlocked=g.depth<=S.unlockedDepth||id==='common';
+    return `<div class="geoCard card" style="${unlocked?'':'opacity:.48'}"><div class="geoEmoji">${unlocked?g.icon:'🔒'}</div><h3>${g.name}</h3><div class="sub">${unlocked?`${g.min}–${g.max} base ore units • ${g.guaranteed?`${g.guaranteed} guaranteed premium roll${g.guaranteed>1?'s':''}`:'early-depth mix'}<br>Current contents bonus: +${Math.round((geodeContentMultiplier()-1)*100)}%<br>Owned: <b>${S.geodes[id]||0}</b>`:`Reach ${depths[g.depth].name}`}</div><button class="btn gold" data-open-geode="${id}" ${!unlocked||(S.geodes[id]||0)<=0?'disabled':''}>Open</button></div>`;
+  }).join('');
 }
-
-
-/* ==========================================
-   FORGE RENDER
-========================================== */
 
 function renderForge(){
-
-  const current =
-    pickaxes[
-      S.pickaxe
-    ];
-
-
-  const next =
-    pickaxes[
-      S.pickaxe + 1
-    ];
-
-
-  document.getElementById(
-    'pickaxeCard'
-  ).innerHTML = `
-
-    <div class="row">
-
-      <div>
-
-        <div class="eyebrow">
-          Pickaxe
-          ${S.pickaxe+1}/${pickaxes.length}
-        </div>
-
-        <h3>
-          ${current.name}
-        </h3>
-
-        <div class="sub">
-          Base power
-          ${current.power}
-          •
-          Current
-          ${pickPower()}
-        </div>
-
-      </div>
-
-      <div class="pill">
-        ⚒️ ${pickPower()}
-      </div>
-
-    </div>
-
-
-    <div
-      class="
-        pickaxeVisual
-        ${skins[S.skin].cls}
-      "
-    >
-      ⛏️
-    </div>
-
-
-    ${
-      next
-      ? `
-
-        <div class="cost">
-
-          Next:
-          <b>
-            ${next.name}
-          </b>
-
-          <br>
-
-          ${costHTML(next.cost)}
-
-        </div>
-
-        <button
-          class="btn"
-          style="
-            width:100%;
-            margin-top:12px
-          "
-          id="upgradePick"
-          ${
-            canAfford(
-              next.cost
-            )
-            ? ''
-            : 'disabled'
-          }
-        >
-          Forge Upgrade
-        </button>
-
-      `
-      : `
-
-        <div
-          class="sub"
-          style="text-align:center"
-        >
-          Maximum pickaxe reached.
-        </div>
-
-      `
-    }
-
-  `;
-
-
-  const shop = [
-
-    `
-    <div class="shopCard card">
-
-      <div class="row">
-
-        <div>
-
-          <h3>
-            🎁 Common Geode
-          </h3>
-
-          <div class="sub">
-            A quick bundle of
-            early-game ores.
-          </div>
-
-        </div>
-
-        <button
-          class="btn gold"
-          data-buy-geode="common"
-        >
-          🪙 250
-        </button>
-
-      </div>
-
-    </div>
-    `,
-
-
-    `
-    <div class="shopCard card">
-
-      <div class="row">
-
-        <div>
-
-          <h3>
-            ⚡ Miner’s Rush
-          </h3>
-
-          <div class="sub">
-            Double pick power
-            for 30 seconds.
-          </div>
-
-        </div>
-
-        <button
-          class="btn gold"
-          id="buyRush"
-        >
-          🪙 500
-        </button>
-
-      </div>
-
-    </div>
-    `,
-
-
-    ...Object.entries(
-      skins
-    )
-    .filter(
-      ([id]) =>
-        id !== 'steel'
-    )
-    .map(
-      ([id,skin]) => `
-
-      <div class="shopCard card">
-
-        <div class="row">
-
-          <div>
-
-            <h3>
-              ⛏️ ${skin.name}
-            </h3>
-
-            <div class="sub">
-              Permanent cosmetic
-              pickaxe finish.
-            </div>
-
-          </div>
-
-          <button
-            class="btn secondary"
-            data-skin="${id}"
-          >
-
-            ${
-              S.skin === id
-              ? 'Equipped'
-              : S.skinsOwned[id]
-                ? 'Equip'
-                : `🪙 ${fmt(skin.price)}`
-            }
-
-          </button>
-
-        </div>
-
-      </div>
-
-      `
-    )
-
-  ];
-
-
-  document.getElementById(
-    'shopList'
-  ).innerHTML =
-    shop.join('');
-
+  const current=pickaxes[S.pickaxe],next=pickaxes[S.pickaxe+1];
+  document.getElementById('pickaxeCard').innerHTML=`<div class="row"><div><div class="eyebrow">Pickaxe ${S.pickaxe+1}/${pickaxes.length}</div><h3>${current.name}</h3><div class="sub">Base ${current.power} • Current ${pickPower()}</div></div><div class="pill">⚒️ ${pickPower()}</div></div><div class="pickaxeVisual ${skins[S.skin].cls}">⛏️</div>${next?`<div class="cost">Next: <b>${next.name}</b><br>${costHTML(next.cost)}</div><button class="btn full" style="margin-top:12px" id="upgradePick" ${canAfford(next.cost)?'':'disabled'}>Forge Upgrade</button>`:`<div class="sub" style="text-align:center">Maximum pickaxe reached.</div>`}`;
+  const shop=[];
+  for(const [id,b] of Object.entries(shopBoosts)){
+    const disabled=b.requiresProspector&&!S.prospectorTarget;
+    shop.push(`<div class="shopCard card"><div class="row"><div><h3>${b.icon} ${b.name}</h3><div class="sub">${b.desc}${boostActive(id)?`<br><span class="tag good" data-boost-time="${id}">Active ${formatTime(S.boosts[id]-now())}</span>`:''}</div></div><button class="btn gold" data-buy-boost="${id}" ${disabled?'disabled':''}>🪙 ${fmt(b.price)}</button></div></div>`);
+  }
+  shop.push(`<div class="shopCard card"><div class="row"><div><h3>📦 Geode Booster</h3><div class="sub">Next 3 geodes contain 50% more ore. Charges stack.<br>Current charges: ${S.boosts.geodeBoosterCharges}</div></div><button class="btn gold" id="buyGeodeBooster">🪙 1,800</button></div></div>`);
+  for(const [id,g] of Object.entries(geodes))if(g.depth<=S.unlockedDepth||id==='common')shop.push(`<div class="shopCard card"><div class="row"><div><h3>${g.icon} Buy ${g.name}</h3><div class="sub">Permanent until opened • ${g.min}–${g.max} base ore units</div></div><button class="btn gold" data-buy-geode="${id}">🪙 ${fmt(g.buy)}</button></div></div>`);
+  const buybackOres=ores.filter(o=>o.rank<=14&&getLife(o.id)>0);if(buybackOres.length){const selected=buybackOres.some(o=>o.id===S.buybackOre)?S.buybackOre:buybackOres[0].id;S.buybackOre=selected;shop.push(`<div class="shopCard card"><h3>📦 Supply Buyback</h3><div class="sub">Emergency common-ore bundle at a deliberately bad exchange rate — useful when you are just short of an upgrade.</div><div class="twoCol" style="margin-top:9px"><select id="buybackOre">${buybackOres.map(o=>`<option value="${o.id}" ${selected===o.id?'selected':''}>${o.icon} ${o.name}</option>`).join('')}</select><button class="btn gold" id="buyBuyback">🪙 ${fmt(buybackPrice(selected))} • ×25</button></div></div>`)};
+  for(const [id,skin] of Object.entries(skins).filter(([id])=>id!=='steel'))shop.push(`<div class="shopCard card"><div class="row"><div><h3>⛏️ ${skin.name}</h3><div class="sub">Permanent cosmetic pickaxe finish.</div></div><button class="btn secondary" data-skin="${id}">${S.skin===id?'Equipped':S.skinsOwned[id]?'Equip':`🪙 ${fmt(skin.price)}`}</button></div></div>`);
+  document.getElementById('shopList').innerHTML=shop.join('');
 }
 
-
-/* ==========================================
-   ENCHANT RENDER
-========================================== */
-
+function renderSystems(){
+  const unlocked=systemDefs.filter(x=>isSystemUnlocked(x.id));
+  if(!isSystemUnlocked(S.activeSystem))S.activeSystem=unlocked[0]?.id||'prospector';
+  document.getElementById('systemTabs').innerHTML=systemDefs.map(x=>`<button class="systemTab ${S.activeSystem===x.id&&isSystemUnlocked(x.id)?'active':''} ${isSystemUnlocked(x.id)?'':'locked'}" data-system="${x.id}">${x.icon} ${x.name}${isSystemUnlocked(x.id)?'':' 🔒'}</button>`).join('');
+  const panel=document.getElementById('systemPanel');
+  if(!unlocked.length){panel.innerHTML=renderRoadmap();return}
+  switch(S.activeSystem){case'prospector':panel.innerHTML=renderProspector();break;case'workshop':panel.innerHTML=renderWorkshop();break;case'enchants':panel.innerHTML=renderEnchants();break;case'refinery':panel.innerHTML=renderRefinery();break;case'expeditions':panel.innerHTML=renderExpeditions();break;case'market':panel.innerHTML=renderMarket();break;case'core':panel.innerHTML=renderCore();break;default:panel.innerHTML=renderRoadmap()}
+}
+function renderRoadmap(){return `<div class="sectionHead"><div><h2>Unlock Roadmap</h2><p>New systems appear as you descend</p></div></div><div class="systemRoadmap">${systemDefs.map(x=>`<div class="roadItem ${isSystemUnlocked(x.id)?'':'locked'}"><div><b>${x.icon} ${x.name}</b><br><span>${isSystemUnlocked(x.id)?'Unlocked':`Unlock at ${x.req}`}</span></div><span>${isSystemUnlocked(x.id)?'✓':'🔒'}</span></div>`).join('')}</div>`}
+function renderProspector(){
+  const discovered=ores.filter(o=>getLife(o.id)>0);if(!discovered.length)return `<div class="systemCard card lockedPanel">Discover an ore first.</div>`;
+  const target=S.prospectorTarget&&oreMap[S.prospectorTarget]?S.prospectorTarget:discovered[0].id;
+  const rows=Array.from({length:S.unlockedDepth+1},(_,d)=>({d,p:oreProbability(target,d),eff:farmEfficiency(target,d)})).filter(x=>x.p>0);
+  const best=rows.slice().sort((a,b)=>b.eff-a.eff)[0];
+  return `<div class="sectionHead"><div><h2>Prospector</h2><p>Target one discovered ore without changing depth identities</p></div></div><div class="systemCard card"><div class="controlLabel">Target ore</div><select id="prospectorSelect"><option value="">No target</option>${discovered.map(o=>`<option value="${o.id}" ${S.prospectorTarget===o.id?'selected':''}>${o.icon} ${o.name}</option>`).join('')}</select><div class="row" style="margin-top:10px"><button class="btn" id="applyProspector">Apply Target</button><button class="btn secondary" id="clearProspector">Clear</button></div><div class="miniGrid"><div class="mini"><b>${((prospectorMultiplier()-1)*100).toFixed(0)}%</b><span>Target boost</span></div><div class="mini"><b>${best?depths[best.d].name:'—'}</b><span>Best farm</span></div><div class="mini"><b>${best?(best.eff*100).toFixed(1):'—'}</b><span>Est. /100 swings</span></div></div></div><div class="sectionHead"><div><h2>${oreMap[target].icon} ${oreMap[target].name} Farming</h2><p>Exact odds + estimated active-mining efficiency</p></div></div><div class="prospectTable">${rows.map(x=>`<div class="prospectRow ${best&&x.d===best.d?'best':''}"><b>${depths[x.d].name}</b><span>${(x.p*100).toFixed(2)}% • ~${(x.eff*100).toFixed(1)}/100 swings${x.d<S.unlockedDepth?` • revisit +${Math.round(revisitPowerBonus(x.d)*100)}% power`:''}</span><strong>${best&&x.d===best.d?'BEST':' '}</strong></div>`).join('')}</div><div class="sub" style="margin-top:10px">“Best farm” accounts for ore odds, multi-drops, rock HP and revisit speed. Revisit bonuses never alter the ore probability table itself.</div>`;
+}
+function renderWorkshop(){
+  return `<div class="sectionHead"><div><h2>Workshop</h2><p>Small permanent coin upgrades for this Life</p></div></div><div class="stack">${workshopDefs.map(def=>{const locked=!meetsDepth(def.unlock),l=workshopLevel(def.id),max=l>=def.cap,cost=workshopCost(def,l);return `<div class="workCard card" style="${locked?'opacity:.48':''}"><div class="row"><div><div class="eyebrow">${def.icon} Level ${l}/${def.cap}</div><h3>${def.name}</h3><div class="sub">${def.effect(l)}${locked?`<br>Unlocks at ${depths[def.unlock].name}`:''}</div></div><button class="btn ${max?'secondary':''}" data-workshop="${def.id}" ${locked||max?'disabled':''}>${max?'MAX':`🪙 ${fmt(cost)}`}</button></div></div>`}).join('')}</div>`;
+}
+function renderRefinery(){
+  return `<div class="sectionHead"><div><h2>Refinery</h2><p>Turn bulk duplicates into higher-grade materials</p></div></div><div class="miniGrid">${Object.entries(materials).map(([id,m])=>`<div class="mini"><b>${m.icon} ${fmt(getMat(id))}</b><span>${m.name}</span></div>`).join('')}</div><div class="stack" style="margin-top:12px">${refineryRecipes.map(r=>{const locked=!meetsDepth(r.unlock),max=maxCraftable(r);return `<div class="refineCard card" style="${locked?'opacity:.48':''}"><div class="row"><div><div class="eyebrow">${r.icon} Owned ${fmt(getMat(r.id))}</div><h3>${r.name}</h3><div class="cost">${Object.entries(r.ores).map(([id,n])=>`<span class="${getInv(id)>=n?'ok':'bad'}">${oreMap[id].icon} ${n} ${oreMap[id].name}</span>`).join(' • ')}</div>${locked?`<div class="sub">Unlocks at ${depths[r.unlock].name}</div>`:''}</div><div><button class="btn small" data-refine="${r.id}:1" ${locked||max<1?'disabled':''}>Craft 1</button><button class="btn small secondary" style="margin-top:6px" data-refine="${r.id}:max" ${locked||max<1?'disabled':''}>Max ×${max}</button></div></div></div>`}).join('')}</div>`;
+}
 function renderEnchants(){
-
-  document.getElementById(
-    'enchList'
-  ).innerHTML =
-
-    S.enchSlots.map(
-      (slot,i) => {
-
-        if(!slot.unlocked){
-
-          const requirement =
-            i === 1
-            ? {
-                level:3,
-                coins:750
-              }
-            : {
-                level:6,
-                coins:3000
-              };
-
-
-          return `
-
-          <div
-            class="
-              enchCard
-              card
-              lockedPanel
-            "
-          >
-
-            <div
-              style="font-size:34px"
-            >
-              🔒
-            </div>
-
-            <h3>
-              Slot ${i+1}
-            </h3>
-
-            <div class="sub">
-
-              Requires
-              ${pickaxes[requirement.level].name}
-
-              <br>
-
-              🪙 ${fmt(requirement.coins)}
-
-            </div>
-
-            <button
-              class="btn"
-              data-unlock-ench="${i}"
-              style="margin-top:12px"
-            >
-              Unlock Slot
-            </button>
-
-          </div>
-
-          `;
-
-        }
-
-
-        if(!slot.ench){
-
-          return `
-
-          <div class="enchCard card">
-
-            <div class="row">
-
-              <div>
-
-                <div class="enchIcon">
-                  ✨
-                </div>
-
-                <h3>
-                  Empty Slot ${i+1}
-                </h3>
-
-                <div class="sub">
-                  Roll your first
-                  enchantment for free.
-                </div>
-
-              </div>
-
-              <button
-                class="btn"
-                data-roll-ench="${i}"
-              >
-                Roll
-              </button>
-
-            </div>
-
-          </div>
-
-          `;
-
-        }
-
-
-        const enchant =
-          enchants.find(
-            e =>
-              e.id ===
-              slot.ench.id
-          );
-
-
-        const cost =
-          250 *
-          (i+1);
-
-
-        return `
-
-        <div class="enchCard card">
-
-          <div class="row">
-
-            <div>
-
-              <div class="enchIcon">
-                ${enchant.icon}
-              </div>
-
-              <div class="enchName">
-
-                ${enchant.name}
-
-                ${
-                  'ⅠⅡⅢⅣⅤ'[
-                    slot.ench.level-1
-                  ] ||
-                  `Lv.${slot.ench.level}`
-                }
-
-              </div>
-
-              <div class="enchEffect">
-                ${
-                  enchant.desc(
-                    slot.ench.level
-                  )
-                }
-              </div>
-
-            </div>
-
-            <button
-              class="btn secondary"
-              data-roll-ench="${i}"
-            >
-
-              Reroll
-
-              <br>
-
-              <small>
-                🪙 ${cost}
-              </small>
-
-            </button>
-
-          </div>
-
-        </div>
-
-        `;
-
-      }
-    ).join('');
-
+  const slots=availableEnchantSlots();
+  const slotHTML=Array.from({length:5},(_,i)=>{const unlocked=i<slots,cur=S.equippedEnchants[i];return `<div class="enchSlot" style="${unlocked?'':'opacity:.45'}"><div><b>Socket ${i+1}</b><div class="sub">${unlocked?(cur?`${enchantMap[cur]?.icon||'✨'} ${enchantMap[cur]?.name||cur} ${S.enchantBook[cur]||0}`:'Empty'):`Unlocks with ${pickaxes[[0,3,5,7,9][i]].name}`}</div></div>${unlocked&&cur?`<button class="btn small secondary" data-unequip-enchant="${cur}">Remove</button>`:''}</div>`}).join('');
+  return `<div class="sectionHead"><div><h2>Enchantments</h2><p>Craft, level, and freely build your pickaxe</p></div></div><div class="stack">${slotHTML}</div><div class="sectionHead"><div><h2>Crafting</h2><p>Basic enchants now • advanced enchants at Ancient Hollow</p></div></div><div class="stack">${enchantDefs.map(e=>{const locked=!meetsDepth(e.unlock),l=S.enchantBook[e.id]||0,next=l+1,max=l>=5,cost=max?null:enchantCost(e.id,next),equipped=S.equippedEnchants.includes(e.id);return `<div class="enchCard card" style="${locked?'opacity:.48':''}"><div class="row"><div><div class="enchIcon">${locked?'🔒':e.icon}</div><div class="enchName">${e.name} ${l?`Lv.${l}`:''}</div><div class="enchEffect">${l?e.desc(l):'Not crafted yet'}${!l&&S.life>0&&S.enchantBlueprints[e.id]?' • Remembered blueprint: first craft 50% cheaper':''}${locked?` • Unlocks at ${depths[e.unlock].name}`:''}</div>${cost?`<div class="cost">Next: ${costHTML(cost)}</div>`:''}</div><div><button class="btn small" data-craft-enchant="${e.id}" ${locked||max?'disabled':''}>${max?'MAX':l?'Upgrade':'Craft'}</button><button class="btn small secondary" style="margin-top:6px" data-equip-enchant-open="${e.id}" ${!l?'disabled':''}>${equipped?'Move':'Equip'}</button></div></div></div>`}).join('')}</div>`;
 }
-
-
-/* ==========================================
-   ORE DETAIL
-========================================== */
+function renderExpeditions(){
+  const slots=Array.from({length:S.expeditionSlots},(_,i)=>{
+    const e=S.expeditions[i];
+    if(e){
+      const ready=now()>=e.end,pct=clamp((now()-e.start)/(e.end-e.start)*100,0,100);
+      return `<div class="expCard card"><div class="eyebrow">Team ${i+1}</div><h3>🎒 ${depths[e.depth].name}</h3><div class="sub">${e.mins} minute expedition${e.target?` • targeting ${oreMap[e.target]?.name||'ore'}`:''}</div><div class="progress" style="margin:10px 0"><i data-exp-progress="${i}" style="width:${pct}%"></i></div><div class="row"><span class="tag ${ready?'good':''}" data-exp-time="${i}">${ready?'Ready to collect':formatTime(e.end-now())}</span><button class="btn" data-collect-exp="${i}" ${ready?'':'disabled'}>Collect</button></div></div>`;
+    }
+    const draft=S.expeditionDrafts[i]||{depth:S.unlockedDepth,mins:15};
+    draft.depth=clamp(Number(draft.depth)||0,0,S.unlockedDepth);draft.mins=expeditionDurations.some(x=>x.mins===Number(draft.mins))?Number(draft.mins):15;S.expeditionDrafts[i]=draft;
+    return `<div class="expCard card"><div class="eyebrow">Team ${i+1} • Idle</div><h3>Start Expedition</h3><div class="twoCol"><div><div class="controlLabel">Depth</div><select id="expDepth_${i}" data-exp-draft-depth="${i}">${Array.from({length:S.unlockedDepth+1},(_,d)=>`<option value="${d}" ${d===draft.depth?'selected':''}>${depths[d].name}</option>`).join('')}</select></div><div><div class="controlLabel">Duration</div><select id="expDur_${i}" data-exp-draft-duration="${i}">${expeditionDurations.map(x=>`<option value="${x.mins}" ${x.mins===draft.mins?'selected':''}>${x.label} • 🪙 ${fmt(x.cost)}</option>`).join('')}</select></div></div><div class="sub" style="margin-top:8px">Expected yield scales with depth, duration and Field Logistics. Current Prospector target is used at half strength.</div><button class="btn full" style="margin-top:10px" data-start-exp="${i}">Send Team</button></div>`;
+  }).join('');
+  const next=S.expeditionSlots+1,price=next===2?15000:50000,req=next===2?5:6;
+  return `<div class="sectionHead"><div><h2>Expeditions</h2><p>AFK mining that completes even while the app is closed</p></div></div><div class="miniGrid"><div class="mini"><b>${S.expeditionSlots}/3</b><span>Teams</span></div><div class="mini"><b>+${Math.round((expeditionMultiplier()-1)*100)}%</b><span>Yield bonus</span></div><div class="mini"><b>${S.prospectorTarget?oreMap[S.prospectorTarget].name:'None'}</b><span>Current target</span></div></div><div class="stack" style="margin-top:12px">${slots}</div>${S.expeditionSlots<3?`<div class="expCard card" style="margin-top:10px"><div class="row"><div><h3>Unlock Team ${next}</h3><div class="sub">Requires ${depths[req].name}</div></div><button class="btn gold" id="unlockExpSlot">🪙 ${fmt(price)}</button></div></div>`:''}`;
+}
+function renderMarket(){
+  ensureMarketCycle();const offers=generateMarketOffers(),cycle=marketCycle(),next=(cycle+1)*4*60*60*1000,refreshPrice=2500+S.marketRefreshCount*1500;
+  return `<div class="sectionHead"><div><h2>Deep Market</h2><p>Rotates every 4 hours • <span id="marketTimer">${formatTime(next-now())}</span> remaining</p></div><button class="btn secondary small" id="refreshMarket">Refresh 🪙 ${fmt(refreshPrice)}</button></div><div class="stack">${offers.map((o,i)=>{const key=`${cycle}:${S.marketSalt}:${i}`,bought=!!S.marketBought[key];return `<div class="marketCard card"><div class="row"><div><div class="eyebrow">Offer ${i+1}</div><h3>${o.title}</h3><div class="sub">${o.desc}</div><div class="cost" style="margin-top:6px">${costHTML(o.cost)}</div></div><button class="btn ${bought?'secondary':''}" data-market-buy="${i}" ${bought?'disabled':''}>${bought?'Sold':'Deal'}</button></div></div>`}).join('')}</div>`;
+}
+function renderCore(){
+  const cost=coreShardCost();return `<div class="sectionHead"><div><h2>Core Forge</h2><p>Rebirth into faster future Lives</p></div></div><div class="coreCard card"><div class="row"><div><div class="eyebrow">Life ${S.life+1}</div><h3>🔆 Core Shards: ${S.coreShards}</h3><div class="sub">Each new Life gets +8% pick power, +10% mastery XP and +5% expedition yield automatically.</div></div></div></div><div class="coreCard card" style="margin-top:10px"><h3>Forge Core Shard</h3><div class="cost">${costHTML(cost)}</div><button class="btn full" style="margin-top:10px" id="craftCoreShard" ${canAfford(cost)?'':'disabled'}>Forge Shard</button></div><div class="sectionHead"><div><h2>Permanent Core Upgrades</h2><p>These survive every rebirth</p></div></div><div class="stack">${coreUpgradeDefs.map(def=>{const l=coreLevel(def.id),price=l+1;return `<div class="coreCard card"><div class="row"><div><div class="eyebrow">${def.icon} Level ${l}</div><h3>${def.name}</h3><div class="sub">${def.effect(l)}</div></div><button class="btn gold" data-core-upgrade="${def.id}" ${S.coreShards<price?'disabled':''}>🔆 ${price}</button></div></div>`}).join('')}</div><div class="coreCard card" style="margin-top:10px"><h3>Begin New Life</h3><div class="sub">Consumes 1 Core Shard. Resets active progression but keeps collection history, mastery, variants, completed sets, cosmetics, enchantment blueprints, Core upgrades and remaining shards.</div><button class="btn full danger" style="margin-top:10px" id="rebirthBtn" ${S.coreShards<1?'disabled':''}>Rebirth</button></div>`;
+}
 
 function openOre(id){
-
-  const ore =
-    oreMap[id];
-
-
-  const life =
-    getLife(id);
-
-
-  const inv =
-    getInv(id);
-
-
-  const level =
-    getMasterLevel(
-      life
-    );
-
-
-  const next =
-    nextMilestone(
-      life
-    );
-
-
-  const foundVariants =
-    S.variants[id] ||
-    {};
-
-
-  const previous =
-    level
-    ? milestones[level-1]
-    : 0;
-
-
-  const progress =
-    next
-    ? clamp(
-        (
-          life -
-          previous
-        ) /
-        (
-          next -
-          previous
-        ) *
-        100,
-        0,
-        100
-      )
-    : 100;
-
-
-  showSheet(`
-
-    <button
-      class="close"
-      data-close
-    >
-      ✕
-    </button>
-
-
-    <div style="font-size:56px">
-      ${
-        life
-        ? ore.icon
-        : '❔'
-      }
-    </div>
-
-
-    <div class="eyebrow">
-
-      Ore #${ore.rank}
-      •
-
-      ${
-        ore.kind === 'real'
-        ? 'Real'
-        : 'Fictional'
-      }
-
-    </div>
-
-
-    <h2>
-
-      ${
-        life
-        ? ore.name
-        : 'Undiscovered Ore'
-      }
-
-    </h2>
-
-
-    ${
-      life
-      ? `
-
-      <div class="miniGrid">
-
-        <div class="mini">
-          <b>${fmt(inv)}</b>
-          <span>Owned</span>
-        </div>
-
-        <div class="mini">
-          <b>${fmt(life)}</b>
-          <span>Lifetime</span>
-        </div>
-
-        <div class="mini">
-          <b>${level}</b>
-          <span>Mastery</span>
-        </div>
-
-      </div>
-
-
-      <div class="sectionHead">
-
-        <div>
-
-          <h2 style="font-size:17px">
-            Mastery
-          </h2>
-
-          <p>
-            ${
-              next
-              ? `${fmt(next-life)} until ${fmt(next)}`
-              : 'All milestones cleared'
-            }
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div
-        class="masterBar"
-        style="height:9px"
-      >
-
-        <i
-          style="
-            width:${progress}%
-          "
-        ></i>
-
-      </div>
-
-
-      <div class="sectionHead">
-
-        <div>
-
-          <h2 style="font-size:17px">
-            Variants
-          </h2>
-
-          <p>
-            Rare collectible versions
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="miniGrid">
-
-        ${
-          variants.map(
-            variant => `
-
-            <div class="mini">
-
-              <b>
-                ${
-                  foundVariants[
-                    variant
-                  ] ||
-                  0
-                }
-              </b>
-
-              <span>
-                ${variant}
-              </span>
-
-            </div>
-
-            `
-          ).join('')
-        }
-
-      </div>
-
-
-      <div class="sectionHead">
-
-        <div>
-
-          <h2 style="font-size:17px">
-            Sell duplicates
-          </h2>
-
-          <p>
-            ${
-              fmt(
-                oreSellValue(
-                  ore
-                )
-              )
-            }
-            coins each
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="row">
-
-        <button
-          class="btn secondary"
-          data-sell="${id}:1"
-          ${
-            inv < 1
-            ? 'disabled'
-            : ''
-          }
-        >
-          Sell 1
-        </button>
-
-
-        <button
-          class="btn secondary"
-          data-sell="${id}:10"
-          ${
-            inv < 10
-            ? 'disabled'
-            : ''
-          }
-        >
-          Sell 10
-        </button>
-
-
-        <button
-          class="btn danger"
-          data-sell-all="${id}"
-          ${
-            inv < 1
-            ? 'disabled'
-            : ''
-          }
-        >
-          Sell All
-        </button>
-
-      </div>
-
-      `
-      : `
-
-      <div
-        class="sub"
-        style="margin-top:10px"
-      >
-        Keep mining deeper layers
-        to discover this ore.
-      </div>
-
-      `
-    }
-
-  `);
-
+  const o=oreMap[id],life=getLife(id),inv=getInv(id),xp=getMastery(id),level=getMasterLevel(xp),next=nextMilestone(xp),foundVariants=S.variants[id]||{},prev=level?milestones[level-1]:0,progress=next?clamp((xp-prev)/(next-prev)*100,0,100):100;
+  showSheet(`<button class="close" data-close>✕</button><div style="font-size:56px">${life?o.icon:'❔'}</div><div class="eyebrow">Ore #${o.rank} • ${o.kind==='real'?'Real':'Fictional'}</div><h2>${life?o.name:'Undiscovered Ore'}</h2>${life?`<div class="miniGrid"><div class="mini"><b>${fmt(inv)}</b><span>Owned</span></div><div class="mini"><b>${fmt(life)}</b><span>Lifetime found</span></div><div class="mini"><b>${level}</b><span>Mastery</span></div></div><div class="sectionHead"><div><h2 style="font-size:17px">Mastery</h2><p>${next?`${fmt(next-xp)} XP until ${fmt(next)}`:'All current milestones cleared'}</p></div></div><div class="masterBar" style="height:9px"><i style="width:${progress}%"></i></div><div class="sub" style="margin-top:7px">Mastery XP: ${fmt(xp)} • Lifetime finds stay separate, so rebirth bonuses can accelerate mastery without faking your collection count.</div><div class="sectionHead"><div><h2 style="font-size:17px">Variants</h2><p>Rare collectible versions</p></div></div><div class="miniGrid">${variants.map(v=>`<div class="mini"><b>${foundVariants[v]||0}</b><span>${v}</span></div>`).join('')}</div><div class="sectionHead"><div><h2 style="font-size:17px">Sell duplicates</h2><p>${fmt(oreSellValue(o))} coins each</p></div></div><div class="row"><button class="btn secondary" data-sell="${id}:1" ${inv<1?'disabled':''}>Sell 1</button><button class="btn secondary" data-sell="${id}:10" ${inv<10?'disabled':''}>Sell 10</button><button class="btn danger" data-sell-all="${id}" ${inv<1?'disabled':''}>Sell All</button></div>`:`<div class="sub" style="margin-top:10px">Keep mining and opening geodes to discover this ore.</div>`}`);
 }
-
-
-/* ==========================================
-   DISCOVERY POPUP
-========================================== */
-
-function showDiscovery(
-  ore,
-  variant
-){
-
-  showSheet(`
-
-    <div class="discovery">
-
-      <div class="rare">
-
-        ${
-          variant
-          ? `${variant} Variant`
-          : 'New Discovery'
-        }
-
-      </div>
-
-
-      <div class="giant">
-        ${ore.icon}
-      </div>
-
-
-      <h1>
-        ${ore.name}
-      </h1>
-
-
-      <div class="sub">
-
-        Ore #${ore.rank}
-
-        ${
-          variant
-          ? ` • ${variant} added to your collection`
-          : ''
-        }
-
-      </div>
-
-
-      <button
-        class="btn"
-        data-close
-        style="
-          margin-top:18px;
-          min-width:140px
-        "
-      >
-        Nice
-      </button>
-
-    </div>
-
-  `);
-
+function showDiscovery(o,variant){showSheet(`<div class="discovery"><div class="rare">${variant?`${variant} Variant`:'New Discovery'}</div><div class="giant">${o.icon}</div><h1>${o.name}</h1><div class="sub">Ore #${o.rank}${variant?` • ${variant} added to your collection`:''}</div><button class="btn" data-close style="margin-top:18px;min-width:140px">Nice</button></div>`)}
+function showGeodeResults(g,rewards,newIds,variantCollector){
+  const rows=Object.entries(rewards).sort((a,b)=>oreMap[a[0]].rank-oreMap[b[0]].rank).map(([id,n])=>`<div class="row" style="padding:9px 0;border-bottom:1px solid var(--line)"><b>${oreMap[id].icon} ${oreMap[id].name}${newIds.has(id)?' <span class="tag good">NEW</span>':''}</b><span>×${n}</span></div>`).join('');
+  const vars=variantCollector.length?`<div class="sub" style="margin-top:10px">Variants: ${variantCollector.slice(0,8).map(v=>`${oreMap[v.ore].icon} ${v.variant}`).join(' • ')}${variantCollector.length>8?` • +${variantCollector.length-8} more`:''}</div>`:'';
+  showSheet(`<button class="close" data-close>✕</button><div class="discovery" style="padding-bottom:2px"><div class="giant" style="font-size:70px">${g.icon}</div><h1>${g.name}</h1><div class="sub">A real haul — ${Object.values(rewards).reduce((a,b)=>a+b,0)} total ore units.</div></div>${rows}${vars}<button class="btn full" data-close style="margin-top:14px">Collect</button>`);
 }
-
-
-/* ==========================================
-   GEODE RESULT
-========================================== */
-
-function showGeodeResults(
-  geode,
-  rewards
-){
-
-  const rows =
-
-    Object.entries(
-      rewards
-    ).map(
-      ([id,count]) => `
-
-      <div
-        class="row"
-        style="
-          padding:9px 0;
-          border-bottom:
-          1px solid var(--line)
-        "
-      >
-
-        <b>
-          ${oreMap[id].icon}
-          ${oreMap[id].name}
-        </b>
-
-        <span>
-          ×${count}
-        </span>
-
-      </div>
-
-      `
-    ).join('');
-
-
-  showSheet(`
-
-    <button
-      class="close"
-      data-close
-    >
-      ✕
-    </button>
-
-
-    <div
-      class="discovery"
-      style="padding-bottom:2px"
-    >
-
-      <div
-        class="giant"
-        style="font-size:70px"
-      >
-        ${geode.icon}
-      </div>
-
-      <h1>
-        ${geode.name}
-      </h1>
-
-      <div class="sub">
-        You cracked it open.
-      </div>
-
-    </div>
-
-
-    ${rows}
-
-
-    <button
-      class="btn"
-      data-close
-      style="
-        width:100%;
-        margin-top:14px
-      "
-    >
-      Collect
-    </button>
-
-  `);
-
+function showExpeditionResults(e,rewards,newIds,variantCollector,geoType,geoCount,matId,matReward){
+  const top=Object.entries(rewards).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  showSheet(`<button class="close" data-close>✕</button><div class="eyebrow">Expedition complete</div><h2>🎒 ${depths[e.depth].name}</h2><div class="sub">${Object.values(rewards).reduce((a,b)=>a+b,0)} ore units returned.</div><div style="margin-top:10px">${top.map(([id,n])=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--line)"><b>${oreMap[id].icon} ${oreMap[id].name}${newIds.has(id)?' <span class="tag good">NEW</span>':''}</b><span>×${n}</span></div>`).join('')}</div>${geoCount?`<div class="sub" style="margin-top:10px">${geodes[geoType].icon} ${geoCount} ${geodes[geoType].name}${geoCount>1?'s':''}</div>`:''}${matReward?`<div class="sub">${materials[matId].icon} ${matReward} ${materials[matId].name}</div>`:''}${variantCollector.length?`<div class="sub">✨ ${variantCollector.length} rare variant${variantCollector.length>1?'s':''} found</div>`:''}<button class="btn full" data-close style="margin-top:14px">Collect</button>`);
 }
-
-
-/* ==========================================
-   SETTINGS
-========================================== */
 
 function showSettings(){
-
-  showSheet(`
-
-    <button
-      class="close"
-      data-close
-    >
-      ✕
-    </button>
-
-
-    <h2>
-      Settings
-    </h2>
-
-
-    <div class="sub">
-      Progress is automatically
-      stored on this device
-      using localStorage.
-    </div>
-
-
-    <div
-      class="stack"
-      style="margin-top:16px"
-    >
-
-      <button
-        class="btn secondary"
-        id="manualSave"
-      >
-        Save Now
-      </button>
-
-
-      <button
-        class="btn secondary"
-        id="exportSave"
-      >
-        Copy Save Backup
-      </button>
-
-
-      <button
-        class="btn secondary"
-        id="importSave"
-      >
-        Import Save Backup
-      </button>
-
-
-      <button
-        class="btn danger"
-        id="resetSave"
-      >
-        Reset All Progress
-      </button>
-
-    </div>
-
-  `);
-
+  showSheet(`<button class="close" data-close>✕</button><h2>Settings</h2><div class="sub">Progress automatically saves to this site’s localStorage. Keep the same GitHub Pages URL to keep the same save.</div><div class="stack" style="margin-top:16px"><button class="btn secondary" id="manualSave">Save Now</button><button class="btn secondary" id="exportSave">Copy Save Backup</button><button class="btn secondary" id="importSave">Import Save Backup</button><button class="btn danger" id="resetSave">Reset All Progress</button></div><div class="sub" style="margin-top:14px;text-align:center">Developer menu is hidden.</div>`);
+}
+function showGodMenu(){
+  renderTop();
+  const oreOptions=ores.map(o=>`<option value="${o.id}">${o.icon} ${o.name}</option>`).join('');
+  const matOptions=Object.entries(materials).map(([id,m])=>`<option value="${id}">${m.icon} ${m.name}</option>`).join('');
+  const pickOptions=pickaxes.map((p,i)=>`<option value="${i}" ${i===S.pickaxe?'selected':''}>${i+1}. ${p.name}</option>`).join('');
+  showSheet(`<button class="close" data-close>✕</button><div class="eyebrow" style="color:#ff9ca7">Developer tools</div><h2>⚡ God Menu</h2><div class="sub">Testing controls are saved. DEV appears at the top whenever this save has used developer tools.</div><div class="sectionHead"><div><h2 style="font-size:17px">Quick Toggles</h2></div></div><div class="twoCol"><button class="btn ${S.dev.infiniteCoins?'danger':'secondary'}" data-dev-toggle="infiniteCoins">∞ Coins: ${S.dev.infiniteCoins?'ON':'OFF'}</button><button class="btn ${S.dev.oneHit?'danger':'secondary'}" data-dev-toggle="oneHit">1-Hit Rocks: ${S.dev.oneHit?'ON':'OFF'}</button><button class="btn ${S.dev.multi100?'danger':'secondary'}" data-dev-toggle="multi100">100% Multi: ${S.dev.multi100?'ON':'OFF'}</button><button class="btn ${S.dev.geode100?'danger':'secondary'}" data-dev-toggle="geode100">100% Geodes: ${S.dev.geode100?'ON':'OFF'}</button><button class="btn ${S.dev.systemsAll?'danger':'secondary'}" data-dev-toggle="systemsAll">All Systems: ${S.dev.systemsAll?'ON':'OFF'}</button></div><div class="sectionHead"><div><h2 style="font-size:17px">Currency & Resources</h2></div></div><div class="twoCol"><button class="btn secondary" data-dev-coins="10000">+10K Coins</button><button class="btn secondary" data-dev-coins="1000000">+1M Coins</button></div><div style="margin-top:8px"><div class="controlLabel">Give Ore</div><div class="twoCol"><select id="devOreSelect">${oreOptions}</select><input id="devOreAmount" type="number" min="1" value="100"></div><button class="btn full" id="devGiveOre" style="margin-top:8px">Give Ore</button></div><div style="margin-top:8px"><div class="controlLabel">Give Refined Material</div><div class="twoCol"><select id="devMatSelect">${matOptions}</select><input id="devMatAmount" type="number" min="1" value="10"></div><button class="btn full" id="devGiveMat" style="margin-top:8px">Give Material</button></div><div class="twoCol" style="margin-top:8px"><button class="btn secondary" id="devAllOres">+1,000 Every Ore</button><button class="btn secondary" id="devAllGeodes">+100 Every Geode</button></div><div class="sectionHead"><div><h2 style="font-size:17px">Progress</h2></div></div><div class="twoCol"><button class="btn secondary" id="devNextDepth">Unlock Next Depth</button><button class="btn secondary" id="devAllDepths">Unlock All Depths</button></div><div style="margin-top:8px"><div class="controlLabel">Set Pickaxe</div><select id="devPickaxe">${pickOptions}</select><button class="btn full" id="devSetPickaxe" style="margin-top:8px">Set Pickaxe</button></div><div class="twoCol" style="margin-top:8px"><button class="btn secondary" id="devMaxWorkshop">Max Workshop</button><button class="btn secondary" id="devMaxEnchants">Max Enchantments</button><button class="btn secondary" id="devCompleteExp">Finish Expeditions</button><button class="btn secondary" id="devCoreShards">+25 Core Shards</button></div><div class="sectionHead"><div><h2 style="font-size:17px">Force Drops</h2></div></div><div class="twoCol"><select id="devForceOre"><option value="">Random Ore</option>${oreOptions}</select><select id="devForceVariant"><option value="">Random Variants</option>${variants.map(v=>`<option value="${v}">${v}</option>`).join('')}</select></div><button class="btn full" id="devApplyForce" style="margin-top:8px">Apply Forced Drops</button><div class="sectionHead"><div><h2 style="font-size:17px">Testing States</h2></div></div><div class="twoCol"><button class="btn secondary" data-dev-preset="early">Early</button><button class="btn secondary" data-dev-preset="mid">Mid</button><button class="btn secondary" data-dev-preset="late">Late</button><button class="btn secondary" data-dev-preset="end">Endgame</button></div><button class="btn danger full" id="devDisable" style="margin-top:12px">Disable Rate Cheats</button>`);
+  const fo=document.getElementById('devForceOre'),fv=document.getElementById('devForceVariant');if(fo)fo.value=S.dev.forceOre||'';if(fv)fv.value=S.dev.forceVariant||'';
+}
+function applyDevPreset(kind){
+  S.dev.used=true;
+  const cfg={early:{depth:1,pick:1,coins:3000,ore:150},mid:{depth:3,pick:4,coins:25000,ore:500},late:{depth:6,pick:7,coins:150000,ore:1500},end:{depth:7,pick:9,coins:1000000,ore:5000}}[kind];if(!cfg)return;
+  S.unlockedDepth=cfg.depth;S.depth=cfg.depth;S.pickaxe=cfg.pick;S.rockHp=depths[cfg.depth].rock;S.coins=Math.max(S.coins,cfg.coins);ores.filter(o=>o.min<=cfg.depth).forEach(o=>{S.inventory[o.id]=Math.max(getInv(o.id),cfg.ore);S.lifetime[o.id]=Math.max(getLife(o.id),cfg.ore);S.masteryXP[o.id]=Math.max(getMastery(o.id),cfg.ore)});if(cfg.depth>=3)Object.keys(materials).forEach(k=>S.materials[k]=Math.max(getMat(k),cfg.depth>=7?50:10));save();closeSheet();renderAll();toast(`${kind} test state loaded`);
 }
 
-
-/* ==========================================
-   MODAL
-========================================== */
-
-function showSheet(html){
-
-  document.getElementById(
-    'sheetContent'
-  ).innerHTML =
-    html;
-
-
-  document.getElementById(
-    'modal'
-  ).classList.add(
-    'show'
-  );
-
-}
-
-
-function closeSheet(){
-
-  document.getElementById(
-    'modal'
-  ).classList.remove(
-    'show'
-  );
-
-}
-
-
-/* ==========================================
-   TOAST
-========================================== */
-
-function toast(message){
-
-  const element =
-    document.getElementById(
-      'toast'
-    );
-
-
-  element.textContent =
-    message;
-
-
-  element.classList.add(
-    'show'
-  );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(
-      () =>
-        element.classList.remove(
-          'show'
-        ),
-      1800
-    );
-
-}
-
-
-/* ==========================================
-   NAVIGATION
-========================================== */
-
+function showSheet(html){document.getElementById('sheetContent').innerHTML=html;document.getElementById('modal').classList.add('show')}
+function closeSheet(){document.getElementById('modal').classList.remove('show')}
+function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),1800)}
 function switchView(view){
-
-  document
-    .querySelectorAll(
-      '.view'
-    )
-    .forEach(
-      element => {
-
-        element.classList.toggle(
-          'active',
-          element.id ===
-          view + 'View'
-        );
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      '.navBtn'
-    )
-    .forEach(
-      button => {
-
-        button.classList.toggle(
-          'active',
-          button.dataset.view ===
-          view
-        );
-
-      }
-    );
-
-
-  if(view === 'collection')
-    renderCollection();
-
-  if(view === 'forge')
-    renderForge();
-
-  if(view === 'enchants')
-    renderEnchants();
-
-  if(view === 'geodes')
-    renderGeodes();
-
-
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
-
+  document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id===view+'View'));
+  document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+  if(view==='collection')renderCollection();if(view==='forge')renderForge();if(view==='geodes')renderGeodes();if(view==='systems')renderSystems();window.scrollTo({top:0,behavior:'smooth'});
 }
 
-
-/* ==========================================
-   BUTTON HANDLER
-========================================== */
-
-document.addEventListener(
-  'click',
-  event => {
-
-    const button =
-      event.target.closest(
-        'button'
-      );
-
-
-    if(!button)
-      return;
-
-
-    if(
-      button.id ===
-      'rockBtn'
-    ){
-
-      return mine();
-
-    }
-
-
-    if(button.dataset.view){
-
-      return switchView(
-        button.dataset.view
-      );
-
-    }
-
-
-    if(
-      button.dataset.depth !==
-      undefined
-    ){
-
-      return selectDepth(
-        +button.dataset.depth
-      );
-
-    }
-
-
-    if(
-      button.dataset.unlock !==
-      undefined
-    ){
-
-      return unlockDepth(
-        +button.dataset.unlock
-      );
-
-    }
-
-
-    if(
-      button.dataset.filter
-    ){
-
-      filter =
-        button.dataset.filter;
-
-      return renderCollection();
-
-    }
-
-
-    if(button.dataset.ore){
-
-      return openOre(
-        button.dataset.ore
-      );
-
-    }
-
-
-    if(
-      button.dataset.openGeode
-    ){
-
-      return openGeode(
-        button.dataset.openGeode
-      );
-
-    }
-
-
-    if(
-      button.dataset.buyGeode
-    ){
-
-      return buyGeode(
-        button.dataset.buyGeode
-      );
-
-    }
-
-
-    if(
-      button.id ===
-      'upgradePick'
-    ){
-
-      return upgradePickaxe();
-
-    }
-
-
-    if(
-      button.id ===
-      'buyRush'
-    ){
-
-      return buyRush();
-
-    }
-
-
-    if(
-      button.dataset.skin
-    ){
-
-      return buySkin(
-        button.dataset.skin
-      );
-
-    }
-
-
-    if(
-      button.dataset.rollEnch !==
-      undefined
-    ){
-
-      return rollEnchant(
-        +button.dataset.rollEnch
-      );
-
-    }
-
-
-    if(
-      button.dataset.unlockEnch !==
-      undefined
-    ){
-
-      return unlockEnchantSlot(
-        +button.dataset.unlockEnch
-      );
-
-    }
-
-
-    if(button.dataset.set){
-
-      return claimSet(
-        button.dataset.set
-      );
-
-    }
-
-
-    if(button.dataset.sell){
-
-      const [
-        id,
-        amount
-      ] =
-        button
-          .dataset
-          .sell
-          .split(':');
-
-
-      return sellOre(
-        id,
-        +amount
-      );
-
-    }
-
-
-    if(
-      button.dataset.sellAll
-    ){
-
-      return sellAll(
-        button.dataset.sellAll
-      );
-
-    }
-
-
-    if(
-      button.dataset.close !==
-      undefined ||
-      button.classList.contains(
-        'close'
-      )
-    ){
-
-      return closeSheet();
-
-    }
-
-
-    if(
-      button.id ===
-      'settingsBtn'
-    ){
-
-      return showSettings();
-
-    }
-
-
-    if(
-      button.id ===
-      'manualSave'
-    ){
-
-      save();
-
-      return toast(
-        'Saved'
-      );
-
-    }
-
-
-    if(
-      button.id ===
-      'exportSave'
-    ){
-
-      const data =
-        JSON.stringify(S);
-
-
-      if(
-        navigator.clipboard
-      ){
-
-        navigator.clipboard
-          .writeText(data)
-          .then(
-            () =>
-              toast(
-                'Save copied to clipboard'
-              )
-          )
-          .catch(
-            () =>
-              prompt(
-                'Copy this save:',
-                data
-              )
-          );
-
-      }
-      else{
-
-        prompt(
-          'Copy this save:',
-          data
-        );
-
-      }
-
-
-      return;
-
-    }
-
-
-    if(
-      button.id ===
-      'importSave'
-    ){
-
-      const raw =
-        prompt(
-          'Paste your OREBOUND save backup:'
-        );
-
-
-      if(!raw)
-        return;
-
-
-      try{
-
-        const imported =
-          JSON.parse(raw);
-
-
-        S =
-          Object.assign(
-            fresh(),
-            imported
-          );
-
-
-        save();
-
-        renderAll();
-
-        closeSheet();
-
-
-        toast(
-          'Save imported'
-        );
-
-      }
-      catch(error){
-
-        toast(
-          'That save code is invalid.'
-        );
-
-      }
-
-
-      return;
-
-    }
-
-
-    if(
-      button.id ===
-      'resetSave'
-    ){
-
-      if(
-        confirm(
-          'Reset ALL OREBOUND progress? This cannot be undone.'
-        )
-      ){
-
-        localStorage.removeItem(
-          SAVE_KEY
-        );
-
-
-        S =
-          fresh();
-
-
-        save();
-
-        renderAll();
-
-        closeSheet();
-
-
-        toast(
-          'Progress reset'
-        );
-
-      }
-
-    }
-
+function handleBrandTap(){brandTapCount++;clearTimeout(brandTapTimer);brandTapTimer=setTimeout(()=>brandTapCount=0,1800);if(brandTapCount>=5){brandTapCount=0;showGodMenu()}}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='rockBtn')return mine(false);
+  if(b.id==='brandBtn')return handleBrandTap();
+  if(b.dataset.view)return switchView(b.dataset.view);
+  if(b.dataset.depth!==undefined)return selectDepth(+b.dataset.depth);
+  if(b.dataset.unlock!==undefined)return unlockDepth(+b.dataset.unlock);
+  if(b.dataset.filter){collectionFilter=b.dataset.filter;return renderCollection()}
+  if(b.dataset.ore)return openOre(b.dataset.ore);
+  if(b.dataset.openGeode)return openGeode(b.dataset.openGeode);
+  if(b.dataset.buyGeode)return buyGeode(b.dataset.buyGeode);
+  if(b.dataset.buyBoost)return buyBoost(b.dataset.buyBoost);
+  if(b.id==='buyGeodeBooster')return buyGeodeBooster();
+  if(b.id==='buyBuyback')return buySupplyBuyback();
+  if(b.id==='upgradePick')return upgradePickaxe();
+  if(b.dataset.skin)return buySkin(b.dataset.skin);
+  if(b.dataset.set)return claimSet(b.dataset.set);
+  if(b.dataset.sell){const [id,a]=b.dataset.sell.split(':');return sellOre(id,+a)}
+  if(b.dataset.sellAll)return sellOre(b.dataset.sellAll,getInv(b.dataset.sellAll));
+  if(b.dataset.system)return setSystem(b.dataset.system);
+  if(b.id==='applyProspector')return setProspector();
+  if(b.id==='clearProspector')return clearProspector();
+  if(b.dataset.workshop)return buyWorkshop(b.dataset.workshop);
+  if(b.dataset.refine){const [id,a]=b.dataset.refine.split(':');return craftRefined(id,a)}
+  if(b.dataset.craftEnchant)return craftEnchant(b.dataset.craftEnchant);
+  if(b.dataset.equipEnchantOpen)return showEquipEnchant(b.dataset.equipEnchantOpen);
+  if(b.dataset.equipEnchant){const [id,slot]=b.dataset.equipEnchant.split(':');return equipEnchant(id,+slot)}
+  if(b.dataset.unequipEnchant)return unequipEnchant(b.dataset.unequipEnchant);
+  if(b.dataset.startExp!==undefined)return startExpedition(+b.dataset.startExp);
+  if(b.dataset.collectExp!==undefined)return collectExpedition(+b.dataset.collectExp);
+  if(b.id==='unlockExpSlot')return unlockExpeditionSlot();
+  if(b.dataset.marketBuy!==undefined)return buyMarket(+b.dataset.marketBuy);
+  if(b.id==='refreshMarket')return refreshMarket();
+  if(b.id==='craftCoreShard')return craftCoreShard();
+  if(b.dataset.coreUpgrade)return buyCoreUpgrade(b.dataset.coreUpgrade);
+  if(b.id==='rebirthBtn')return rebirth();
+  if(b.dataset.close!==undefined||b.classList.contains('close'))return closeSheet();
+  if(b.id==='settingsBtn')return showSettings();
+  if(b.id==='manualSave'){save();return toast('Saved')}
+  if(b.id==='exportSave'){
+    const data=JSON.stringify(S);if(navigator.clipboard)navigator.clipboard.writeText(data).then(()=>toast('Save copied to clipboard')).catch(()=>prompt('Copy this save:',data));else prompt('Copy this save:',data);return;
   }
-);
-
-
-/* ==========================================
-   CLOSE MODAL BY TAPPING BACKDROP
-========================================== */
-
-document.getElementById(
-  'modal'
-).addEventListener(
-  'click',
-  event => {
-
-    if(
-      event.target.id ===
-      'modal'
-    ){
-
-      closeSheet();
-
-    }
-
+  if(b.id==='importSave'){
+    const raw=prompt('Paste your OREBOUND save backup:');if(!raw)return;try{S=migrate(JSON.parse(raw));save();renderAll();closeSheet();toast('Save imported')}catch(err){toast('That save code is invalid.')}return;
   }
-);
+  if(b.id==='resetSave'){if(confirm('Reset ALL OREBOUND progress? This cannot be undone.')){localStorage.removeItem(SAVE_KEY);S=fresh();save();renderAll();closeSheet();toast('Progress reset')}return}
+  if(b.dataset.devToggle){S.dev.used=true;S.dev[b.dataset.devToggle]=!S.dev[b.dataset.devToggle];save();showGodMenu();return}
+  if(b.dataset.devCoins){S.dev.used=true;S.coins+=+b.dataset.devCoins;save();showGodMenu();return}
+  if(b.id==='devGiveOre'){const id=document.getElementById('devOreSelect').value,a=Math.max(1,+document.getElementById('devOreAmount').value||1);S.dev.used=true;addOre(id,a,{silent:true});save();showGodMenu();return}
+  if(b.id==='devGiveMat'){const id=document.getElementById('devMatSelect').value,a=Math.max(1,+document.getElementById('devMatAmount').value||1);S.dev.used=true;S.materials[id]=getMat(id)+a;save();showGodMenu();return}
+  if(b.id==='devAllOres'){S.dev.used=true;ores.forEach(o=>addOre(o.id,1000,{silent:true,noVariant:true}));save();showGodMenu();return}
+  if(b.id==='devAllGeodes'){S.dev.used=true;Object.keys(geodes).forEach(k=>S.geodes[k]+=100);save();showGodMenu();return}
+  if(b.id==='devNextDepth'){S.dev.used=true;S.unlockedDepth=Math.min(7,S.unlockedDepth+1);S.depth=S.unlockedDepth;S.rockHp=depths[S.depth].rock;save();showGodMenu();return}
+  if(b.id==='devAllDepths'){S.dev.used=true;S.unlockedDepth=7;S.depth=7;S.rockHp=depths[7].rock;save();showGodMenu();return}
+  if(b.id==='devSetPickaxe'){S.dev.used=true;S.pickaxe=clamp(+document.getElementById('devPickaxe').value||0,0,pickaxes.length-1);save();showGodMenu();return}
+  if(b.id==='devMaxWorkshop'){S.dev.used=true;workshopDefs.forEach(x=>S.workshop[x.id]=x.cap);save();showGodMenu();return}
+  if(b.id==='devMaxEnchants'){S.dev.used=true;enchantDefs.forEach(x=>{S.enchantBook[x.id]=5;S.enchantBlueprints[x.id]=true});save();showGodMenu();return}
+  if(b.id==='devCompleteExp'){S.dev.used=true;S.expeditions.forEach(e=>{if(e)e.end=now()-1});save();showGodMenu();return}
+  if(b.id==='devCoreShards'){S.dev.used=true;S.coreShards+=25;save();showGodMenu();return}
+  if(b.id==='devApplyForce'){S.dev.used=true;S.dev.forceOre=document.getElementById('devForceOre').value||null;S.dev.forceVariant=document.getElementById('devForceVariant').value||null;save();showGodMenu();return}
+  if(b.dataset.devPreset)return applyDevPreset(b.dataset.devPreset);
+  if(b.id==='devDisable'){S.dev.infiniteCoins=false;S.dev.oneHit=false;S.dev.multi100=false;S.dev.geode100=false;S.dev.systemsAll=false;S.dev.forceOre=null;S.dev.forceVariant=null;save();showGodMenu();return}
+});
 
-
-/* ==========================================
-   AUTOSAVE
-========================================== */
-
-setInterval(
-  () => {
-
-    save();
-
-
-    if(
-      Date.now() <
-      S.rushUntil
-    ){
-
-      renderMine();
-
-    }
-
-  },
-  5000
-);
-
-
-document.addEventListener(
-  'visibilitychange',
-  () => {
-
-    if(
-      document.hidden
-    ){
-
-      save();
-
-    }
-
+document.addEventListener('change',e=>{
+  const el=e.target;
+  if(el.id==='buybackOre'){
+    S.buybackOre=el.value;const btn=document.getElementById('buyBuyback');if(btn)btn.textContent=`🪙 ${fmt(buybackPrice(el.value))} • ×25`;save();
   }
-);
+  if(el.dataset.expDraftDepth!==undefined){const i=+el.dataset.expDraftDepth;S.expeditionDrafts[i]=S.expeditionDrafts[i]||{depth:S.unlockedDepth,mins:15};S.expeditionDrafts[i].depth=+el.value;save()}
+  if(el.dataset.expDraftDuration!==undefined){const i=+el.dataset.expDraftDuration;S.expeditionDrafts[i]=S.expeditionDrafts[i]||{depth:S.unlockedDepth,mins:15};S.expeditionDrafts[i].mins=+el.value;save()}
+});
 
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeSheet()});
 
-window.addEventListener(
-  'beforeunload',
-  save
-);
-
-
-/* ==========================================
-   START GAME
-========================================== */
+let lastAuto=0;
+let seenMarketCycle=marketCycle();
+function updateTimedUI(){
+  renderTop();
+  for(const [id] of Object.entries(shopBoosts)){
+    const el=document.querySelector(`[data-boost-time="${id}"]`);if(el)el.textContent=boostActive(id)?`Active ${formatTime(S.boosts[id]-now())}`:'Expired';
+  }
+  if(document.getElementById('mineView').classList.contains('active')){
+    const active=[];for(const [id,b] of Object.entries(shopBoosts))if(boostActive(id))active.push(`${b.icon} ${b.name} ${formatTime(S.boosts[id]-now())}`);if(S.boosts.geodeBoosterCharges>0)active.push(`📦 Geode Booster ×${S.boosts.geodeBoosterCharges}`);if(S.prospectorTarget)active.push(`🧭 ${oreMap[S.prospectorTarget].name} target`);
+    document.getElementById('boostStrip').innerHTML=active.length?active.map(x=>`<div class="boostChip">${x}</div>`).join(''):'<div class="boostChip">No active boosts</div>';
+    document.getElementById('hitHint').textContent=`${pickaxes[S.pickaxe].name} • ${pickPower()} damage${revisitSteps()?` • +${Math.round(revisitMultiBonus()*100)}% revisit multi`:''}`;
+    document.getElementById('statPower').textContent=pickPower();document.getElementById('statGeode').textContent=`${(geodeChance()*100).toFixed(1)}%`;
+  }
+  if(document.getElementById('systemsView').classList.contains('active')&&S.activeSystem==='expeditions'){
+    S.expeditions.forEach((e,i)=>{if(!e)return;const timeEl=document.querySelector(`[data-exp-time="${i}"]`),bar=document.querySelector(`[data-exp-progress="${i}"]`),btn=document.querySelector(`[data-collect-exp="${i}"]`);const ready=now()>=e.end,pct=clamp((now()-e.start)/(e.end-e.start)*100,0,100);if(timeEl){timeEl.textContent=ready?'Ready to collect':formatTime(e.end-now());timeEl.classList.toggle('good',ready)}if(bar)bar.style.width=`${pct}%`;if(btn)btn.disabled=!ready;});
+  }
+  const cycle=marketCycle();if(cycle!==seenMarketCycle){seenMarketCycle=cycle;if(document.getElementById('systemsView').classList.contains('active')&&S.activeSystem==='market')renderSystems()}
+  const mt=document.getElementById('marketTimer');if(mt)mt.textContent=formatTime((marketCycle()+1)*4*60*60*1000-now());
+}
+setInterval(()=>{
+  if(boostActive('autoDrill')&&!document.hidden&&now()-lastAuto>=950){lastAuto=now();mine(true)}
+  updateTimedUI();
+},1000);
+setInterval(save,5000);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)save()});
+window.addEventListener('beforeunload',save);
 
 renderAll();
-
 })();
 </script>
-
 </body>
 </html>
